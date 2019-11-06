@@ -1,20 +1,14 @@
-package cmpe273.lab2.project.controller;
+package cmpe295.hungwen.elearning.controller;
 
-import cmpe273.lab2.project.models.Client;
-import cmpe273.lab2.project.models.Record;
-import cmpe273.lab2.project.models.User;
-import cmpe273.lab2.project.repository.ClientRepository;
+import cmpe295.hungwen.elearning.models.Record;
+import cmpe295.hungwen.elearning.models.User;
 
-import cmpe273.lab2.project.service.ClientService;
+import cmpe295.hungwen.elearning.service.ClientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller

@@ -1,9 +1,9 @@
-package cmpe273.lab2.project.service;
+package cmpe295.hungwen.elearning.service;
 
-import cmpe273.lab2.project.models.Client;
-import cmpe273.lab2.project.models.Device;
-import cmpe273.lab2.project.models.Record;
-import cmpe273.lab2.project.models.User;
+import cmpe295.hungwen.elearning.models.Client;
+import cmpe295.hungwen.elearning.models.Device;
+import cmpe295.hungwen.elearning.models.Record;
+import cmpe295.hungwen.elearning.models.User;
 
 import java.util.List;
 import java.util.Map;

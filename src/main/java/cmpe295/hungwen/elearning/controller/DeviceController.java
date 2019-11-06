@@ -1,15 +1,10 @@
-package cmpe273.lab2.project.controller;
+package cmpe295.hungwen.elearning.controller;
 
-import cmpe273.lab2.project.service.ClientService;
-import cmpe273.lab2.project.service.DeviceService;
+import cmpe295.hungwen.elearning.service.ClientService;
+import cmpe295.hungwen.elearning.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController

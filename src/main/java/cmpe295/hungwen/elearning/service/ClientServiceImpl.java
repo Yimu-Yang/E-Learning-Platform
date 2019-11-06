@@ -1,7 +1,7 @@
-package cmpe273.lab2.project.service;
+package cmpe295.hungwen.elearning.service;
 
-import cmpe273.lab2.project.models.*;
-import cmpe273.lab2.project.repository.ClientRepository;
+import cmpe295.hungwen.elearning.repository.ClientRepository;
+import cmpe295.hungwen.elearning.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

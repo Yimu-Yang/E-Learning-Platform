@@ -1,18 +1,10 @@
-package cmpe273.lab2.project.controller;
+package cmpe295.hungwen.elearning.controller;
 
-import cmpe273.lab2.project.models.Client;
-import cmpe273.lab2.project.models.Device;
-import cmpe273.lab2.project.repository.ClientRepository;
-import cmpe273.lab2.project.service.ClientService;
-import org.springframework.beans.factory.annotation.Autowired;
+import cmpe295.hungwen.elearning.service.ClientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Controller
 public class RegistrationController {

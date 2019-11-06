@@ -1,4 +1,4 @@
-package cmpe273.lab2.project;
+package cmpe295.hungwen.elearning;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

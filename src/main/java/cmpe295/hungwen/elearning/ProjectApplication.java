@@ -1,13 +1,9 @@
-package cmpe273.lab2.project;
+package cmpe295.hungwen.elearning;
 
-import cmpe273.lab2.project.controller.DeviceController;
-import org.apache.catalina.WebResource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-
-import java.util.Scanner;
 
 @SpringBootApplication
 public class ProjectApplication extends SpringBootServletInitializer {

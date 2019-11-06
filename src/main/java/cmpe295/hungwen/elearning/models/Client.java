@@ -1,11 +1,9 @@
-package cmpe273.lab2.project.models;
+package cmpe295.hungwen.elearning.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 @Document(collection = "client")

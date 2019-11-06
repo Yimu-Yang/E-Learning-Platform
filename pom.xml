@@ -36,7 +36,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>cmpe273.lab2.project.ProjectApplication</mainClass>
+                            <mainClass>cmpe295.hungwen.elearning.ProjectApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -47,7 +47,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.2.1</version>
                 <configuration>
-                    <mainClass>cmpe273.lab2.project.ProjectApplication</mainClass>
+                    <mainClass>cmpe295.hungwen.elearning.ProjectApplication</mainClass>
                 </configuration>
             </plugin>
             <plugin>

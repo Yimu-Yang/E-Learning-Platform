@@ -1,4 +1,4 @@
-package cmpe273.lab2.project.models;
+package cmpe295.hungwen.elearning.models;
 
 import java.sql.Timestamp;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package cmpe273.lab2.project.service;
+package cmpe295.hungwen.elearning.service;
 
 public interface DeviceService {
 

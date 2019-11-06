@@ -1,9 +1,6 @@
-package cmpe273.lab2.project.service;
+package cmpe295.hungwen.elearning.service;
 
-import org.apache.http.impl.client.HttpClients;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
