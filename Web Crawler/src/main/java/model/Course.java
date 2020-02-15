@@ -2,7 +2,7 @@ package model;
 
 public class Course {
 
-    private String name; // private key
+    private String name; // primary key
     private String provider;
     private String price;
     private String rating;
