@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <databaseUrl>jdbc:mysql://localhost:3306/yimuyang</databaseUrl>
+    <userName>root</userName>
+    <password>678678abc</password>
+    <tableName>course</tableName>
+</configuration>
