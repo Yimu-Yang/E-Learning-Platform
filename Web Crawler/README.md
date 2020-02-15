@@ -6,6 +6,8 @@
 - if the file crawlerData_courseTalkIndividualCoursePageUrl.txt located in ./src/resources/crawlerData_courseTalkIndividualCoursePageUrl.txt does not exist, run CourseTalkCoursePageCrawlerDriver first, then run CourseTalkCourseInfoCrawlerDriver.java.
 
 ## bash command
+- mvn exec:java
+
 - cd [project root folder]
 - mvn package
 - cd target
