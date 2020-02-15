@@ -14,7 +14,7 @@ public class CourseTalkCoursePageCrawlerDriver {
         // 0 means only crawls on the seed url
         final int MAX_CRAWL_DEPTH = 100;
         final int NUMBER_OF_CRAWELRS = 4;
-        final String CRAWL_STORAGE = "/Users/yimuyang/IdeaProjects/Web_Crawler/crawlerData/crawl/root";
+        final String CRAWL_STORAGE = "./crawlerData/crawl/root";
 
         /*
          * Instantiate crawl config

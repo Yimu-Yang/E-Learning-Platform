@@ -1,9 +1,9 @@
 show databases;
 use yimuyang;
-drop table course3;
+drop table course2;
 show tables;
 
-CREATE TABLE course (
+CREATE TABLE course2 (
     courseName varchar(255) NOT NULL PRIMARY KEY,
     provider varchar(255),
     price varchar(255),
@@ -16,8 +16,8 @@ CREATE TABLE course (
     courseActualURL varchar(255)
 );
 
-describe course;
-select * from course;
-select * from course where imageURL="N/A" and videoURL="N/A";
-select count(*) from course;
+describe course2;
+select * from course2;
+select * from course2 where imageURL="N/A" and videoURL="N/A";
+select count(*) from course2;
 

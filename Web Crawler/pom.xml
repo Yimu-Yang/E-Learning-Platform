@@ -38,7 +38,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.2.1</version>
                 <configuration>
-                    <mainClass>driver.CourseTalkCoursePageCrawlerDriver</mainClass>
+                    <mainClass>driver.CourseTalkCourseInfoCrawlerDriver</mainClass>
                 </configuration>
             </plugin>
             <plugin>
