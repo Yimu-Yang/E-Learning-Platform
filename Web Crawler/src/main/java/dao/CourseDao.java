@@ -5,11 +5,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import java.io.File;
 
@@ -36,6 +32,28 @@ public class CourseDao {
 
     public int insertCourse(Course course) throws SQLException {
         Statement sta = conn.createStatement();
+        if (!tableExist()) {
+            String createTableSql = "CREATE TABLE " + this.tableName + "(" +
+                    "    courseName varchar(255) NOT NULL PRIMARY KEY," +
+                    "    provider varchar(255)," +
+                    "    price varchar(255)," +
+                    "    rating varchar(255)," +
+                    "    courseDescription VARCHAR(10000)," +
+                    "    imageURL varchar(255)," +
+                    "    videoURL varchar(255)," +
+                    "    courseTalkURL varchar(255)," +
+                    "    courseRedirectURL varchar(255)," +
+                    "    courseActualURL varchar(255)" +
+                    ")";
+            sta.executeUpdate(createTableSql);
+        }
+
+        String entryExistSql = "SELECT * FROM " + modifyQuotation(this.tableName) + " WHERE courseName=\"" + modifyQuotation(course.getName()) + "\"";
+        ResultSet rs = sta.executeQuery(entryExistSql);
+        if (rs.next()) {
+            return 1;
+        }
+
         String sql = "INSERT INTO " + this.tableName + " (courseName, provider, price, rating, courseDescription, imageURL, "
                 + "videoURL, courseTalkURL, courseRedirectURL, courseActualURL) VALUES (\"" + modifyQuotation(course.getName()) + "\", "
                 + "\"" + modifyQuotation(course.getProvider()) + "\", " + "\"" + modifyQuotation(course.getPrice()) + "\", " + "\""
@@ -51,6 +69,15 @@ public class CourseDao {
 //            e.printStackTrace();
 //        }
 //        return -1;
+    }
+
+    private boolean tableExist() throws SQLException {
+        DatabaseMetaData dbm = conn.getMetaData();
+        ResultSet tables = dbm.getTables(null, null, this.tableName, null);
+        if (tables.next()) {
+            return true;
+        }
+        return false;
     }
 
     public ResultSet runSql(String sql) throws SQLException {
