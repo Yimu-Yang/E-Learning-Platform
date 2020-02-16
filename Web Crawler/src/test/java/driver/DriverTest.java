@@ -3,6 +3,7 @@ package driver;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -17,6 +18,11 @@ public class DriverTest {
         while (set.next()) {
             System.out.println(set.getString("courseName"));
         }
+    }
+
+    @Test
+    public void testRemoveDuplication() throws IOException {
+        System.out.println(CourseTalkCoursePageCrawlerDriver.removeDuplication());
     }
 
 }

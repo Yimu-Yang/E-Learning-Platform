@@ -18,7 +18,7 @@ public class CourseDao {
 
     public CourseDao() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver"); // register mysql driver
             File inputFile = new File("./config.xml");
             SAXReader reader = new SAXReader();
             Document document = reader.read(inputFile);
@@ -48,7 +48,7 @@ public class CourseDao {
             sta.executeUpdate(createTableSql);
         }
 
-        String entryExistSql = "SELECT * FROM " + modifyQuotation(this.tableName) + " WHERE courseName=\"" + modifyQuotation(course.getName()) + "\"";
+        String entryExistSql = "SELECT * FROM " + this.tableName + " WHERE courseName=\"" + modifyQuotation(course.getName()) + "\"";
         ResultSet rs = sta.executeQuery(entryExistSql);
         if (rs.next()) {
             return 1;

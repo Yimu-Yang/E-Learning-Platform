@@ -8,6 +8,10 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
 import crawler.CourseTalkCoursePageCrawler;
 
+import java.io.*;
+import java.util.HashSet;
+import java.util.Set;
+
 public class CourseTalkCoursePageCrawlerDriver {
 
     public static void main(String[] args) throws Exception {
@@ -47,6 +51,26 @@ public class CourseTalkCoursePageCrawlerDriver {
          * Start the crawl.
          */
         controller.start(CourseTalkCoursePageCrawler.class, NUMBER_OF_CRAWELRS);
+        removeDuplication();
+    }
+
+    public static boolean removeDuplication() throws IOException {
+        File inputFile = new File("./src/main/resources/crawlerData_courseTalkIndividualCoursePageUrl.txt");
+        File tempFile = new File("./src/main/resources/temp.txt");
+
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+        Set<String> set = new HashSet<>();
+        String currentLine;
+        while((currentLine = reader.readLine()) != null) {
+            if (set.add(currentLine)) {
+                writer.write(currentLine + "\n");
+            }
+        }
+        writer.close();
+        reader.close();
+        return tempFile.renameTo(inputFile);
     }
 
 }
