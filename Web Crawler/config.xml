@@ -3,5 +3,5 @@
     <databaseUrl>jdbc:mysql://localhost:3306/yimuyang</databaseUrl>
     <userName>root</userName>
     <password>678678abc</password>
-    <tableName>course2</tableName>
+    <tableName>course3</tableName>
 </configuration>
