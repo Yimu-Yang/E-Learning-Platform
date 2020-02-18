@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <databaseUrl>jdbc:mysql://localhost:3306/yimuyang</databaseUrl>
-    <userName>root</userName>
-    <password>678678abc</password>
-    <tableName>course3</tableName>
+    <hostName>elearningplatform-rdb.cfiylxzjjqxv.us-east-2.rds.amazonaws.com</hostName>
+    <databaseName>eLearningDB</databaseName>
+    <userName>eLearning</userName>
+    <password>eLearning</password>
+    <tableName>course2</tableName>
+<!--    <hostName>localhost</hostName>-->
+<!--    <databaseName>yimuyang</databaseName>-->
+<!--    <userName>root</userName>-->
+<!--    <password>678678abc</password>-->
+<!--    <tableName>course3</tableName>-->
 </configuration>

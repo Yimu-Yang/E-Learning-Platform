@@ -23,7 +23,8 @@ public class CourseDao {
             SAXReader reader = new SAXReader();
             Document document = reader.read(inputFile);
             Element root = document.getRootElement();
-            conn = DriverManager.getConnection(root.elementTextTrim("databaseUrl"), root.elementTextTrim("userName"), root.elementTextTrim("password"));
+            conn = DriverManager.getConnection("jdbc:mysql://" + root.elementTextTrim("hostName")
+                    + ":3306" + "/" + root.elementTextTrim("databaseName"), root.elementTextTrim("userName"), root.elementTextTrim("password"));
             tableName = root.elementTextTrim("tableName");
         } catch (SQLException | ClassNotFoundException | DocumentException e) {
             e.printStackTrace();
