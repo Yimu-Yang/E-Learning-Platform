@@ -21,9 +21,8 @@ public class CourseController {
 
     @GetMapping(path = "/", produces = "application/json")
     public HttpEntity findAllCourses() {
-        List<Course> allCouses = courseService.findAllCourses();
-        System.out.println(allCouses);
+        List<Course> allCourses = courseService.findAllCourses();
 
-        return new ResponseEntity<>(allCouses, HttpStatus.OK);
+        return new ResponseEntity<>(allCourses, HttpStatus.OK);
     }
 }
