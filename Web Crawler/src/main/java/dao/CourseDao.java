@@ -13,8 +13,8 @@ import model.Course;
 
 public class CourseDao {
 
-    private Connection conn;
-    private String tableName;
+    public Connection conn;
+    public String tableName;
 
     public CourseDao() {
         try {
@@ -33,21 +33,6 @@ public class CourseDao {
 
     public int insertCourse(Course course) throws SQLException {
         Statement sta = conn.createStatement();
-        if (!tableExist()) {
-            String createTableSql = "CREATE TABLE " + this.tableName + "(" +
-                    "    courseName varchar(255) NOT NULL PRIMARY KEY," +
-                    "    provider varchar(255)," +
-                    "    price varchar(255)," +
-                    "    rating varchar(255)," +
-                    "    courseDescription VARCHAR(10000)," +
-                    "    imageURL varchar(255)," +
-                    "    videoURL varchar(255)," +
-                    "    courseTalkURL varchar(255)," +
-                    "    courseRedirectURL varchar(255)," +
-                    "    courseActualURL varchar(255)" +
-                    ")";
-            sta.executeUpdate(createTableSql);
-        }
 
         String entryExistSql = "SELECT * FROM " + this.tableName + " WHERE courseName=\"" + modifyQuotation(course.getName()) + "\"";
         ResultSet rs = sta.executeQuery(entryExistSql);
@@ -72,7 +57,7 @@ public class CourseDao {
 //        return -1;
     }
 
-    private boolean tableExist() throws SQLException {
+    public boolean tableExist() throws SQLException {
         DatabaseMetaData dbm = conn.getMetaData();
         ResultSet tables = dbm.getTables(null, null, this.tableName, null);
         if (tables.next()) {

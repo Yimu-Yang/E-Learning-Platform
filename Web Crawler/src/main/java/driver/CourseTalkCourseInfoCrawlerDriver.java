@@ -1,5 +1,6 @@
 package driver;
 
+import dao.CourseDao;
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
@@ -11,6 +12,9 @@ import crawler.CourseTalkCourseInfoCrawler;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
 
 public class CourseTalkCourseInfoCrawlerDriver {
 
@@ -53,10 +57,55 @@ public class CourseTalkCourseInfoCrawlerDriver {
             e.printStackTrace();
         }
 
+        checkTableExist();
+
         /*
          * Start the crawl.
          */
         controller.start(CourseTalkCourseInfoCrawler.class, NUMBER_OF_CRAWELRS);
+    }
+
+    private static void checkTableExist() throws SQLException {
+        CourseDao courseDao = new CourseDao();
+        Statement sta = courseDao.conn.createStatement();
+        if (!courseDao.tableExist()) {
+            String createTableSql = "CREATE TABLE " + courseDao.tableName + "(" +
+                    "    courseName varchar(255) NOT NULL PRIMARY KEY," +
+                    "    provider varchar(255)," +
+                    "    price varchar(255)," +
+                    "    rating varchar(255)," +
+                    "    courseDescription VARCHAR(10000)," +
+                    "    imageURL varchar(255)," +
+                    "    videoURL varchar(255)," +
+                    "    courseTalkURL varchar(255)," +
+                    "    courseRedirectURL varchar(255)," +
+                    "    courseActualURL varchar(255)" +
+                    ")";
+            sta.executeUpdate(createTableSql);
+        } else {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Table already exist. Drop table and create a new one instead?(Yes/No)");
+            String input = scanner.nextLine();
+            if (input.toLowerCase().equals("no") || input.toLowerCase().equals("n")) {
+                System.exit(0);
+            } else {
+                String dropTableSql = "Drop Table " + courseDao.tableName;
+                sta.executeUpdate(dropTableSql);
+                String createTableSql = "CREATE TABLE " + courseDao.tableName + "(" +
+                        "    courseName varchar(255) NOT NULL PRIMARY KEY," +
+                        "    provider varchar(255)," +
+                        "    price varchar(255)," +
+                        "    rating varchar(255)," +
+                        "    courseDescription VARCHAR(10000)," +
+                        "    imageURL varchar(255)," +
+                        "    videoURL varchar(255)," +
+                        "    courseTalkURL varchar(255)," +
+                        "    courseRedirectURL varchar(255)," +
+                        "    courseActualURL varchar(255)" +
+                        ")";
+                sta.executeUpdate(createTableSql);
+            }
+        }
     }
 
 }
