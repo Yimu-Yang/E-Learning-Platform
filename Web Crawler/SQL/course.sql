@@ -17,7 +17,7 @@ CREATE TABLE course2 (
     courseActualURL varchar(255)
 );
 
-select * from course2;
+select * from course;
 select * from course where coursetalk_url='N/A';
 select * from course where course_redirect_url='N/A';
 select * from course where course_actual_url='N/A';

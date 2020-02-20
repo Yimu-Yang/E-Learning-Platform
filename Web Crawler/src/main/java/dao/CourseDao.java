@@ -1,10 +1,14 @@
 package dao;
 
+import driver.CourseTalkCourseInfoCrawlerDriver;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.*;
 
 import java.io.File;
@@ -19,9 +23,13 @@ public class CourseDao {
     public CourseDao() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); // register mysql driver
-            File inputFile = new File("./config.xml");
+//            File inputFile = new File("./config.xml");
+
+            InputStream in = CourseDao.class.getResourceAsStream("/config.xml");
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+
             SAXReader reader = new SAXReader();
-            Document document = reader.read(inputFile);
+            Document document = reader.read(br);
             Element root = document.getRootElement();
             conn = DriverManager.getConnection("jdbc:mysql://" + root.elementTextTrim("hostName")
                     + ":3306" + "/" + root.elementTextTrim("databaseName"), root.elementTextTrim("userName"), root.elementTextTrim("password"));

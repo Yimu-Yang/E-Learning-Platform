@@ -9,9 +9,7 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
 import crawler.CourseTalkCourseInfoCrawler;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
@@ -46,7 +44,16 @@ public class CourseTalkCourseInfoCrawlerDriver {
         // collect course information from collected course pages
         BufferedReader reader;
         try {
-            reader = new BufferedReader(new FileReader("./src/main/resources/crawlerData_courseTalkIndividualCoursePageUrl.txt"));
+//            reader = new BufferedReader(new FileReader("./src/main/resources/crawlerData_courseTalkIndividualCoursePageUrl.txt"));
+//            reader = new BufferedReader(new FileReader("./crawlerData_courseTalkIndividualCoursePageUrl.txt"));
+
+            /*
+             * As long as the file.txt resource is available on the classpath then this approach will work the same way
+             * regardless of whether the file.txt resource is in a classes/ directory or inside a jar.
+             */
+            InputStream in = CourseTalkCourseInfoCrawlerDriver.class.getResourceAsStream("/crawlerData_courseTalkIndividualCoursePageUrl.txt");
+            reader = new BufferedReader(new InputStreamReader(in));
+
             String line = reader.readLine();
             while (line != null) {
                 controller.addSeed(line);

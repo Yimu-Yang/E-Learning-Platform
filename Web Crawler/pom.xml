@@ -9,14 +9,15 @@
     <packaging>jar</packaging>
 
     <build>
-<!--        <resources>-->
-<!--            <resource>-->
-<!--                <directory>./src/main/resources</directory>-->
-<!--                <includes>-->
-<!--                    <include>**/*.txt</include>-->
-<!--                </includes>-->
-<!--            </resource>-->
-<!--        </resources>-->
+        <resources>
+            <resource>
+                <directory>./src/main/resources</directory>
+                <includes>
+                    <include>**/*.txt</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <!-- Compile with Java 1.8 -->
             <plugin>

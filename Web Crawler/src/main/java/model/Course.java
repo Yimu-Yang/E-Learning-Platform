@@ -9,7 +9,6 @@ public class Course {
     private String description;
     private String imageURL;
     private String videoURL;
-
     private String courseTalkURL;
     private String courseRedirectURL;
     private String courseActualURL;
