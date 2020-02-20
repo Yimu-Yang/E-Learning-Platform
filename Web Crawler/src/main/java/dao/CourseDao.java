@@ -1,6 +1,5 @@
 package dao;
 
-import driver.CourseTalkCourseInfoCrawlerDriver;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -11,8 +10,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.*;
 
-import java.io.File;
-
 import model.Course;
 
 public class CourseDao {
@@ -22,6 +19,10 @@ public class CourseDao {
 
     public CourseDao() {
         try {
+            /*
+             * The forName() method of java.lang.Class class is used to get the instance of this Class
+             * with the specified class name. This class name is specified as the string parameter.
+             */
             Class.forName("com.mysql.cj.jdbc.Driver"); // register mysql driver
 //            File inputFile = new File("./config.xml");
 
