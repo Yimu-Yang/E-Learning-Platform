@@ -21,8 +21,8 @@ public class DriverTest {
 //    }
 //
 //    @Test
-//    public void testRemoveDuplication() throws IOException {
-//        System.out.println(CourseTalkCoursePageCrawlerDriver.removeDuplication());
+//    public void testPrint() {
+//        System.out.println("mvn tested!");
 //    }
 
 }
