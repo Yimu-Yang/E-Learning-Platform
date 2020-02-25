@@ -3,13 +3,20 @@ package driver;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.io.IOException;
 
 import dao.CourseDao;
 
 public class DriverTest {
+
+    @Test
+    public void testPrint() {
+        String output = "test: mvn test";
+        assertEquals("test: mvn test", output, "Wrong Result");
+    }
 
 //    @Test
 //    public void testDriver() throws SQLException {
@@ -18,11 +25,6 @@ public class DriverTest {
 //        while (set.next()) {
 //            System.out.println(set.getString("courseName"));
 //        }
-//    }
-//
-//    @Test
-//    public void testPrint() {
-//        System.out.println("mvn tested!");
 //    }
 
 }
