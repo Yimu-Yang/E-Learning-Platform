@@ -1,4 +1,4 @@
-package cmpe295.hungwenli.elearning.domain;
+package cmpe295.hungwenli.elearning.model;
 
 import javax.persistence.*;
 
@@ -8,7 +8,7 @@ import javax.persistence.*;
 //import lombok.NoArgsConstructor;
 
 /**
- * JPA Entity
+ * Define JPA and Hibernate Entity
  */
 
 //@Data
@@ -54,7 +54,9 @@ public class Course {
     @Column(name = "course_actual_url", columnDefinition = "nvarchar(255)")
     private String courseActualURl;
 
-    public Course() {}
+    public Course() {
+
+    }
 
     public Course(Integer id, String courseName, String provider, String price, String rating, String courseDescription, String imageURL,
                   String videoURL, String courseTalkURL, String courseRedirectURL, String courseActualURl) {
