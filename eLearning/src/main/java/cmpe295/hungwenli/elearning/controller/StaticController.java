@@ -17,7 +17,7 @@ public class StaticController {
 
     @GetMapping(path = "/", produces = "text/html")
     public @ResponseBody HttpEntity index() {
-        return new ResponseEntity<>(Utility.readFile("index.html"), HttpStatus.OK);
+        return new ResponseEntity<>(Utility.readFile("login.html"), HttpStatus.OK);
     }
 
     @GetMapping(path = "/content", produces = "text/html")
