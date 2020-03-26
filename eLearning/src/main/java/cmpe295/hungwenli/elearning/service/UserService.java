@@ -44,7 +44,7 @@ public class UserService {
             return;
         }
         request.getSession().setAttribute("user", userName);
-        response.sendRedirect("/content");
+        response.sendRedirect("/chat");
     }
 
     public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {

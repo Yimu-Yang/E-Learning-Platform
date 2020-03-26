@@ -28,4 +28,12 @@ public class StaticController {
         return new ResponseEntity<>(Utility.readFile("error.html"), HttpStatus.OK);
     }
 
+    @GetMapping(path = "/chat", produces = "text/html")
+    public @ResponseBody HttpEntity chat(HttpServletRequest request) {
+        if (Utility.checkLoggedIn(request)) {
+            return new ResponseEntity<>(Utility.readFile("chat.html"), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(Utility.readFile("error.html"), HttpStatus.OK);
+    }
+
 }
