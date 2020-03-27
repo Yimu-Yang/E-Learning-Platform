@@ -8,6 +8,9 @@ var stompClient = null;
 var username = null;
 var colors = ['#2196F3', '#32c787', '#00BCD4', '#ff5652', '#ffc107', '#ff85af', '#FF9800', '#39bbb0'];
 
+connect();
+messageForm.addEventListener('submit', sendMessage, true);
+
 function connect() {
     var origin = window.location.origin;
     var url = origin + "/username";
@@ -88,6 +91,3 @@ function sendMessage(event) {
     }
     event.preventDefault();
 }
-
-connect();
-messageForm.addEventListener('submit', sendMessage, true);
