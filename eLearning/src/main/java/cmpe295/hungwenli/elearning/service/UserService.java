@@ -1,5 +1,6 @@
 package cmpe295.hungwenli.elearning.service;
 
+import cmpe295.hungwenli.elearning.model.Response;
 import cmpe295.hungwenli.elearning.model.User;
 import cmpe295.hungwenli.elearning.repository.UserRepository;
 
@@ -44,7 +45,7 @@ public class UserService {
             return;
         }
         request.getSession().setAttribute("user", userName);
-        response.sendRedirect("/chat");
+        response.sendRedirect("/content");
     }
 
     public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -53,6 +54,11 @@ public class UserService {
             session.invalidate();
         }
         response.sendRedirect("/");
+    }
+
+    public Response getUsername(HttpServletRequest request, HttpServletResponse response) {
+        Response message = new Response((String) request.getSession().getAttribute("user"));
+        return message;
     }
 
 }

@@ -1,13 +1,9 @@
 package cmpe295.hungwenli.elearning.controller;
 
-import cmpe295.hungwenli.elearning.model.Message;
+import cmpe295.hungwenli.elearning.model.Response;
 import cmpe295.hungwenli.elearning.service.UserService;
 
-import cmpe295.hungwenli.elearning.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
@@ -40,6 +36,12 @@ public class UserController {
     @GetMapping(path = "/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         userService.logout(request, response);
+    }
+
+    @GetMapping(path = "/username")
+    public @ResponseBody
+    Response getUsername(HttpServletRequest request, HttpServletResponse response) {
+        return userService.getUsername(request, response);
     }
 
 }
