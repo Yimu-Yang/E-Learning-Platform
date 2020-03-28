@@ -1,15 +1,23 @@
 'use strict';
 
-var messageForm = document.querySelector('#messageForm');
-var messageInput = document.querySelector('#message');
-var messageArea = document.querySelector('#messageArea');
-var connectingElement = document.querySelector('.connecting');
+$(document).ready(init);
+
+var messageForm = null;
+var messageInput = null;
+var messageArea = null;
+var connectingElement = null;
 var stompClient = null;
 var username = null;
 var colors = ['#2196F3', '#32c787', '#00BCD4', '#ff5652', '#ffc107', '#ff85af', '#FF9800', '#39bbb0'];
 
-connect();
-messageForm.addEventListener('submit', sendMessage, true);
+function init() {
+    messageForm = document.querySelector('#messageForm');
+    messageInput = document.querySelector('#message');
+    messageArea = document.querySelector('#messageArea');
+    connectingElement = document.querySelector('.connecting');
+    connect();
+    messageForm.addEventListener('submit', sendMessage, true);
+}
 
 function connect() {
     var origin = window.location.origin;
