@@ -1,15 +1,13 @@
 package cmpe295.hungwenli.elearning.repository;
 
-import cmpe295.hungwenli.elearning.model.User;
+import cmpe295.hungwenli.elearning.model.ELearningUser;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
-public interface UserRepository extends CrudRepository<User, Integer> {
+public interface UserRepository extends CrudRepository<ELearningUser, Integer> {
 
     /*
      * Spring Data JPA Repository needs correct method signature name to build the query automatically.
      */
-    List<User> findByUserName(String userName);
+    ELearningUser findByUserName(String userName);
 
 }

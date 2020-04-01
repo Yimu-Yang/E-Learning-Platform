@@ -1,13 +1,14 @@
 package cmpe295.hungwenli.elearning.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Define JPA and Hibernate Entity
  */
 @Entity
 @Table(name = "user")
-public class User {
+public class ELearningUser {
 
     @Id
     @Column(name = "user_name", unique = true, nullable = false, columnDefinition = "nvarchar(100)")
@@ -16,11 +17,11 @@ public class User {
     @Column(name = "password", nullable = false, columnDefinition = "nvarchar(100)")
     private String password;
 
-    public User() {
+    public ELearningUser() {
 
     }
 
-    public User(String userName, String password) {
+    public ELearningUser(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }
