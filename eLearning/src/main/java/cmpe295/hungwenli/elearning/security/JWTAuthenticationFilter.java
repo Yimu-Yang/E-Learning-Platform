@@ -2,7 +2,6 @@ package cmpe295.hungwenli.elearning.security;
 
 import cmpe295.hungwenli.elearning.model.ELearningUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -53,11 +52,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
 
-        Claims claims = Jwts.claims().setSubject(((ELearningUser) auth.getPrincipal()).getUserName());
-
         String token = Jwts.builder()
-                .setClaims(claims)
-                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .setSubject(((ELearningUser) auth.getPrincipal()).getUserName())
+                .claim("roles", "user")
+                .setIssuedAt(new Date())
+                .signWith(SignatureAlgorithm.HS256, SECRET)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .compact();
 

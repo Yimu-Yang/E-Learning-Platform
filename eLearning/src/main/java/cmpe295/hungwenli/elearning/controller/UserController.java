@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static cmpe295.hungwenli.elearning.security.SecurityConstants.HEADER_STRING;
@@ -39,7 +40,9 @@ public class UserController {
         Map<String, String> token = userService.signup(username, password);
 
         if (token == null) {
-            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+            Map<String, String> res = new HashMap<>();
+            res.put("errorMessage", "Email is already in use.");
+            return new ResponseEntity<>(res, HttpStatus.CONFLICT);
         }
 
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -56,16 +59,17 @@ public class UserController {
         String username = user.getEmail();
         String password = user.getPassword();
 
-        Map<String, String> token = userService.signin(username, password);
+        Map<String, String> res = userService.signin(username, password);
 
-        if (token == null) {
-            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+
+        if (!res.containsKey("token")) {
+            return new ResponseEntity<>(res, HttpStatus.CONFLICT);
         }
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(HEADER_STRING, token.get("token"));
+        httpHeaders.add(HEADER_STRING, res.get("token"));
 
-        return new ResponseEntity<>(token, httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(res, httpHeaders, HttpStatus.OK);
     }
 
     @GetMapping(path = "/signout", produces = "application/json")

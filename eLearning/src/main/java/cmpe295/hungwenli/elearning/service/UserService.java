@@ -50,15 +50,15 @@ public class UserService {
 
     public Map<String, String> signin(String username, String password) {
         ELearningUser user = userRepository.findByUserName(username);
+        Map<String, String> res = new HashMap<>();
         if (user == null) {
-            return null;
+            res.put("errorMessage", "User does not exist.");
+            return res;
         }
 
-        System.out.println("password: " + user.getPassword());
-        System.out.println("encoded password: " + bCryptPasswordEncoder.encode(password));
-
         if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
-            return null;
+            res.put("errorMessage", "Password does not match");
+            return res;
         }
 
         String token = Jwts.builder()
@@ -69,9 +69,8 @@ public class UserService {
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .compact();
 
-        Map<String, String> result = new HashMap<>();
-        result.put("token", TOKEN_PREFIX + token);
+        res.put("token", TOKEN_PREFIX + token);
 
-        return result;
+        return res;
     }
 }
