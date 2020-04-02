@@ -2,19 +2,9 @@ package cmpe295.hungwenli.elearning.model;
 
 import javax.persistence.*;
 
-//import lombok.AllArgsConstructor;
-//import lombok.Builder;
-//import lombok.Data;
-//import lombok.NoArgsConstructor;
-
 /**
  * Define JPA and Hibernate Entity
  */
-
-//@Data
-//@Builder
-//@AllArgsConstructor
-//@NoArgsConstructor
 @Entity
 @Table(name = "course")
 public class Course {

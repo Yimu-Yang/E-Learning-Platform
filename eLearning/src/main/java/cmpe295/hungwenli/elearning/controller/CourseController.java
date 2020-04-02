@@ -29,6 +29,17 @@ public class CourseController {
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/home")
+    public String courseHome(HttpServletRequest request, Model model) {
+        if (!Utility.checkLoggedIn(request)) {
+            model.addAttribute("error_message", "Please login first!");
+            return "error";
+        }
+        List<Course> courses = courseService.popularCourses();
+        model.addAttribute("popular_courses", courses);
+        return "home";
+    }
+
     @PostMapping(path = "/result")
     public String searchResult(HttpServletRequest request, Model model) {
         if (!Utility.checkLoggedIn(request)) {

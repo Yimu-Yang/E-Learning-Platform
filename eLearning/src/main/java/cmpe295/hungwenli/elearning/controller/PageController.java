@@ -17,15 +17,6 @@ public class PageController {
         return "index";
     }
 
-    @GetMapping(path = "/home")
-    public String courseHome(HttpServletRequest request, Model model) {
-        if (!Utility.checkLoggedIn(request)) {
-            model.addAttribute("error_message", "Please login first!");
-            return "error";
-        }
-        return "home";
-    }
-
     @GetMapping(path = "/chat")
     public String chat(HttpServletRequest request, Model model) {
         if (!Utility.checkLoggedIn(request)) {
@@ -33,15 +24,6 @@ public class PageController {
             return "error";
         }
         return "chat";
-    }
-
-    @GetMapping(path = "/react")
-    public String reactDemo(HttpServletRequest request, Model model) {
-        if (!Utility.checkLoggedIn(request)) {
-            model.addAttribute("error_message", "Please login first!");
-            return "error";
-        }
-        return "react";
     }
 
 }

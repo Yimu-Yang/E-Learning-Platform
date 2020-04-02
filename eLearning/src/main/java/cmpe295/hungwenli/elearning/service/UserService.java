@@ -19,6 +19,9 @@ public class UserService {
     UserRepository userRepository;
 
     public String register(HttpServletRequest request) {
+        if (request.getSession().getAttribute("user") != null) {
+            return "can't register when someone is logging in!";
+        }
         List<User> users = userRepository.findByUserName(request.getParameter("user_name"));
         if (users.size() != 0) {
             return "username already exist!";
@@ -45,13 +48,13 @@ public class UserService {
         return "success";
     }
 
-    public boolean logout(HttpServletRequest request) {
+    public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
         if (session == null) {
-            return false;
+            return "logout fail!";
         }
         session.invalidate();
-        return true;
+        return "success";
     }
 
     public Response getUsername(HttpServletRequest request) {

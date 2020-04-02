@@ -2,9 +2,11 @@ package cmpe295.hungwenli.elearning.service;
 
 import cmpe295.hungwenli.elearning.repository.CourseRepository;
 import cmpe295.hungwenli.elearning.model.Course;
+import cmpe295.hungwenli.elearning.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,14 +21,30 @@ public class CourseService {
         return courses;
     }
 
+    // dynamically get top 10 popular courses, needs modification.
+    public List<Course> popularCourses(){
+        List<Course> courses = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            int random = Utility.getRandomNumberInRange(783, 20956);
+            Optional<Course> o = courseRepository.findById(random);
+            if (!o.isEmpty()) {
+                courses.add(o.get());
+            }
+        }
+        return courses;
+    }
+
     // PageRank algorithm, needs modification.
     public List<Course> pageRankCourseSearch(String courseName){
         List<Course> courses = courseRepository.findByCourseName(courseName);
         // demo results, needs modification!
-        courses.add(courseRepository.findByCourseName("Intermediate Photoshop CS6").get(0));
-        courses.add(courseRepository.findByCourseName("International Affairs: Globalisation").get(0));
-        courses.add(courseRepository.findByCourseName("International and Cross-Cultural Negotiation").get(0));
-        courses.add(courseRepository.findByCourseName("International B2B (Business to Business) Marketing").get(0));
+        for (int i = 0; i < 4; i++) {
+            int random = Utility.getRandomNumberInRange(783, 20956);
+            Optional<Course> o = courseRepository.findById(random);
+            if (!o.isEmpty()) {
+                courses.add(o.get());
+            }
+        }
         return courses;
     }
 

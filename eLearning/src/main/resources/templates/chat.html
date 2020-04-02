@@ -13,9 +13,6 @@
         <script src="/js/chat.js"></script>
     </head>
     <body>
-        <noscript>
-            <h2>Sorry! Your browser doesn't support Javascript</h2>
-        </noscript>
 
         <div id="chat-page">
             <div class="chat-container">
@@ -34,8 +31,10 @@
                         </div>
                     </div>
                 </form>
-                <a href="/home" class="primary">Quit Chat</a>
+
+                <button onclick="history.back()">quit chat</button><br>
             </div>
         </div>
+
     </body>
 </html>

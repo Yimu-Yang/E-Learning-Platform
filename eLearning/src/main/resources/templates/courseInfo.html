@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>course details</title>
+        <title>course information</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -10,6 +10,16 @@
         <script type="application/javascript" src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
     </head>
     <body>
+
+        <div>
+            <ul>
+                <li><a href="/home">home page</a></li>
+                <li><a href="/logout">logout</a></li>
+                <li><a href="/chat">start chatting</a></li>
+                <li><a th:href="@{${course.getCourseActualURL()}}">Go To the Course</a></li>
+            </ul>
+        </div>
+
         <p>Course Info</p><br>
 
         <table style="width:100%">
@@ -17,68 +27,59 @@
                 <th>Attribute</th>
                 <th>Value</th>
             </tr>
-            <tr>
+            <tr th:if="${course.getId() != 'N/A'}">
                 <th>Course ID</th>
                 <th th:text="${course.getId()}"></th>
             </tr>
-            <tr>
+            <tr th:if="${course.getCourseName() != 'N/A'}">
                 <th>Course Name</th>
                 <th th:text="${course.getCourseName()}"></th>
             </tr>
-            <tr>
+            <tr th:if="${course.getProvider() != 'N/A'}">
                 <th>Provider</th>
                 <th th:text="${course.getProvider()}"></th>
-            </tr>            <tr>
+            </tr>
+            <tr th:if="${course.getPrice() != 'N/A'}">
                 <th>Price</th>
                 <th th:text="${course.getPrice()}"></th>
             </tr>
-            <tr>
+            <tr th:if="${course.getRating() != 'N/A'}">
                 <th>Rating</th>
                 <th th:text="${course.getRating()}"></th>
             </tr>
-            <tr>
+            <tr th:if="${course.getCourseDescription() != 'N/A'}">
                 <th>Description</th>
                 <th th:text="${course.getCourseDescription()}"></th>
             </tr>
-            <tr>
+            <tr th:if="${course.getImageURL() != 'N/A'}">
                 <th>Image</th>
                 <th th:text="${course.getImageURL()}"></th>
             </tr>
-            <tr>
+            <tr th:if="${course.getVideoURL() != 'N/A'}">
                 <th>Video</th>
                 <th th:text="${course.getVideoURL()}"></th>
             </tr>
-            <tr>
+            <tr th:if="${course.getCourseTalkURL() != 'N/A'}">
                 <th>CourseTalkURL</th>
                 <th th:text="${course.getCourseTalkURL()}"></th>
-            </tr>            <tr>
+            </tr>
+            <tr th:if="${course.getCourseRedirectURL() != 'N/A'}">
                 <th>CourseRedirectURL</th>
                 <th th:text="${course.getCourseRedirectURL()}"></th>
             </tr>
-            <tr>
-                <th>CourseActualURl</th>
+            <tr th:if="${course.getCourseActualURL() != 'N/A'}">
+                <th>CourseActualURL</th>
                 <th th:text="${course.getCourseActualURL()}"></th>
             </tr>
         </table><br>
 
         <span th:if="${course.getImageURL() != 'N/A'}">
-            <img th:src="@{${course.getImageURL()}}">
-            <br>
-        </span>
+            <img th:src="@{${course.getImageURL()}}" width="320" height="240">
+        </span><br>
 
         <span th:if="${course.getVideoURL() != 'N/A'}">
-            <video width="320" height="240" autoplay>
-                <source th:src="@{${course.getVideoURL()}}">
-                Your browser does not support the video tag.
-            </video>
-            <br>
-        </span>
-
-        <a th:href="@{${course.getCourseActualURL()}}">Go To the Course</a><br>
-
-        <a href="/chat">start chatting</a><br>
-
-        <a href="/home">home page</a>
+            <iframe width="420" height="315" th:src="@{${course.getVideoURL()}}"></iframe>
+        </span><br>
 
     </body>
 </html>
