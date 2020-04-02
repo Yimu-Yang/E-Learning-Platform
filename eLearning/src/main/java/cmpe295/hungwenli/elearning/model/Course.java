@@ -161,4 +161,21 @@ public class Course {
         this.courseActualURl = courseActualURl;
     }
 
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", courseName='" + courseName + '\'' +
+                ", provider='" + provider + '\'' +
+                ", price='" + price + '\'' +
+                ", rating='" + rating + '\'' +
+                ", courseDescription='" + courseDescription + '\'' +
+                ", imageURL='" + imageURL + '\'' +
+                ", videoURL='" + videoURL + '\'' +
+                ", courseTalkURL='" + courseTalkURL + '\'' +
+                ", courseRedirectURL='" + courseRedirectURL + '\'' +
+                ", courseActualURl='" + courseActualURl + '\'' +
+                '}';
+    }
+
 }

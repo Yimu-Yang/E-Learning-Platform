@@ -13,6 +13,7 @@ public class Utility {
             String str;
             while ((str = reader.readLine()) != null) {
                 contentBuilder.append(str);
+                contentBuilder.append("\n");
             }
             reader.close();
         } catch (IOException e) {

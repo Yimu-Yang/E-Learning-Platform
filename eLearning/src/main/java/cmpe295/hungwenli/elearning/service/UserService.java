@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -33,30 +32,30 @@ public class UserService {
         return true;
     }
 
-    public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public boolean login(HttpServletRequest request) {
         if (request.getSession().getAttribute("user") != null) {
-            return;
+            return false;
         }
         String userName = request.getParameter("user_name");
         String password = request.getParameter("password");
         List<User> users = userRepository.findByUserName(userName);
         if (users.size() == 0 || !users.get(0).getPassword().equals(password)) {
-            response.sendRedirect("/");
-            return;
+            return false;
         }
         request.getSession().setAttribute("user", userName);
-        response.sendRedirect("/content");
+        return true;
     }
 
-    public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public boolean logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if (session != null) {
-            session.invalidate();
+        if (session == null) {
+            return false;
         }
-        response.sendRedirect("/");
+        session.invalidate();
+        return true;
     }
 
-    public Response getUsername(HttpServletRequest request, HttpServletResponse response) {
+    public Response getUsername(HttpServletRequest request) {
         Response message = new Response((String) request.getSession().getAttribute("user"));
         return message;
     }

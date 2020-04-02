@@ -4,6 +4,7 @@ import cmpe295.hungwenli.elearning.model.Response;
 import cmpe295.hungwenli.elearning.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
@@ -20,28 +21,35 @@ public class UserController {
     UserService userService;
 
     @PostMapping(path = "/register")
-    public void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String register(HttpServletRequest request, Model model) {
         if (!userService.register(request)) {
-            response.sendRedirect("/");
-            return;
+            model.addAttribute("error_message", "registration fail");
+            return "error";
         }
-        response.sendRedirect("/content");
+        return "courseHome";
     }
 
     @PostMapping(path = "/login")
-    public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        userService.login(request, response);
+    public String login(HttpServletRequest request, Model model) {
+        if (!userService.login(request)) {
+            model.addAttribute("error_message", "login fail");
+            return "error";
+        }
+        return "courseHome";
     }
 
     @GetMapping(path = "/logout")
-    public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        userService.logout(request, response);
+    public String logout(HttpServletRequest request, Model model) {
+        if (!userService.logout(request)) {
+            model.addAttribute("error_message", "logout fail");
+            return "error";
+        }
+        return "index";
     }
 
     @GetMapping(path = "/username")
-    public @ResponseBody
-    Response getUsername(HttpServletRequest request, HttpServletResponse response) {
-        return userService.getUsername(request, response);
+    public @ResponseBody Response getUsername(HttpServletRequest request) {
+        return userService.getUsername(request);
     }
 
 }

@@ -43,7 +43,10 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("Customer[userName='%s', password='%s']", this.userName, this.password);
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 
 }
