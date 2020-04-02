@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 
 @Controller
 @RequestMapping
@@ -22,20 +19,22 @@ public class UserController {
 
     @PostMapping(path = "/register")
     public String register(HttpServletRequest request, Model model) {
-        if (!userService.register(request)) {
-            model.addAttribute("error_message", "registration fail");
+        String response = userService.register(request);
+        if (!response.equals("success")) {
+            model.addAttribute("error_message", response);
             return "error";
         }
-        return "courseHome";
+        return "home";
     }
 
     @PostMapping(path = "/login")
     public String login(HttpServletRequest request, Model model) {
-        if (!userService.login(request)) {
-            model.addAttribute("error_message", "login fail");
+        String response = userService.login(request);
+        if (!response.equals("success")) {
+            model.addAttribute("error_message", response);
             return "error";
         }
-        return "courseHome";
+        return "home";
     }
 
     @GetMapping(path = "/logout")

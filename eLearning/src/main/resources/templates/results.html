@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>search results</title>
+    </head>
+    <body>
+        <p>Search Results Page</p><br>
+
+        <ol>
+            <li th:each="course: ${courses}"><a th:href="@{/course(id=${course.getId()})}" th:text="${course.getCourseName()}"></a></li>
+        </ol>
+
+    </body>
+</html>

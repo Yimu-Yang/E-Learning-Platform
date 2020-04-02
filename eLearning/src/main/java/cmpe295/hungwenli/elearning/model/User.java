@@ -16,9 +16,7 @@ public class User {
     @Column(name = "password", nullable = false, columnDefinition = "nvarchar(100)")
     private String password;
 
-    public User() {
-
-    }
+    public User() {}
 
     public User(String userName, String password) {
         this.userName = userName;

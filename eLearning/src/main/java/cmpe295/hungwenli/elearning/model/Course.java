@@ -52,14 +52,12 @@ public class Course {
     private String courseRedirectURL;
 
     @Column(name = "course_actual_url", columnDefinition = "nvarchar(255)")
-    private String courseActualURl;
+    private String courseActualURL;
 
-    public Course() {
-
-    }
+    public Course() {}
 
     public Course(Integer id, String courseName, String provider, String price, String rating, String courseDescription, String imageURL,
-                  String videoURL, String courseTalkURL, String courseRedirectURL, String courseActualURl) {
+                  String videoURL, String courseTalkURL, String courseRedirectURL, String courseActualURL) {
         this.id = id;
         this.courseName = courseName;
         this.provider = provider;
@@ -70,7 +68,7 @@ public class Course {
         this.videoURL = videoURL;
         this.courseTalkURL = courseTalkURL;
         this.courseRedirectURL = courseRedirectURL;
-        this.courseActualURl = courseActualURl;
+        this.courseActualURL = courseActualURL;
     }
 
     public Integer getId() {
@@ -153,12 +151,12 @@ public class Course {
         this.courseRedirectURL = courseRedirectURL;
     }
 
-    public String getCourseActualURl() {
-        return courseActualURl;
+    public String getCourseActualURL() {
+        return courseActualURL;
     }
 
-    public void setCourseActualURl(String courseActualURl) {
-        this.courseActualURl = courseActualURl;
+    public void setCourseActualURL(String courseActualURL) {
+        this.courseActualURL = courseActualURL;
     }
 
     @Override
@@ -174,7 +172,7 @@ public class Course {
                 ", videoURL='" + videoURL + '\'' +
                 ", courseTalkURL='" + courseTalkURL + '\'' +
                 ", courseRedirectURL='" + courseRedirectURL + '\'' +
-                ", courseActualURl='" + courseActualURl + '\'' +
+                ", courseActualURl='" + courseActualURL + '\'' +
                 '}';
     }
 

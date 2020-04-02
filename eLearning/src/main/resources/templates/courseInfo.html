@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>course details</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="application/javascript" src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+        <script type="application/javascript" src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+        <script type="application/javascript" src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+    </head>
+    <body>
+        <p>Course Info</p><br>
+
+        <table style="width:100%">
+            <tr>
+                <th>Attribute</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <th>Course ID</th>
+                <th th:text="${course.getId()}"></th>
+            </tr>
+            <tr>
+                <th>Course Name</th>
+                <th th:text="${course.getCourseName()}"></th>
+            </tr>
+            <tr>
+                <th>Provider</th>
+                <th th:text="${course.getProvider()}"></th>
+            </tr>            <tr>
+                <th>Price</th>
+                <th th:text="${course.getPrice()}"></th>
+            </tr>
+            <tr>
+                <th>Rating</th>
+                <th th:text="${course.getRating()}"></th>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <th th:text="${course.getCourseDescription()}"></th>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <th th:text="${course.getImageURL()}"></th>
+            </tr>
+            <tr>
+                <th>Video</th>
+                <th th:text="${course.getVideoURL()}"></th>
+            </tr>
+            <tr>
+                <th>CourseTalkURL</th>
+                <th th:text="${course.getCourseTalkURL()}"></th>
+            </tr>            <tr>
+                <th>CourseRedirectURL</th>
+                <th th:text="${course.getCourseRedirectURL()}"></th>
+            </tr>
+            <tr>
+                <th>CourseActualURl</th>
+                <th th:text="${course.getCourseActualURL()}"></th>
+            </tr>
+        </table><br>
+
+        <span th:if="${course.getImageURL() != 'N/A'}">
+            <img th:src="@{${course.getImageURL()}}">
+            <br>
+        </span>
+
+        <span th:if="${course.getVideoURL() != 'N/A'}">
+            <video width="320" height="240" autoplay>
+                <source th:src="@{${course.getVideoURL()}}">
+                Your browser does not support the video tag.
+            </video>
+            <br>
+        </span>
+
+        <a th:href="@{${course.getCourseActualURL()}}">Go To the Course</a><br>
+
+        <a href="/chat">start chatting</a><br>
+
+        <a href="/home">home page</a>
+
+    </body>
+</html>

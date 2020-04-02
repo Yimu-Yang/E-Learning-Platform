@@ -12,9 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping
@@ -29,15 +29,29 @@ public class CourseController {
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/course")
-    public String getCourseInfo(HttpServletRequest request, Model model) {
+    @PostMapping(path = "/result")
+    public String searchResult(HttpServletRequest request, Model model) {
         if (!Utility.checkLoggedIn(request)) {
             model.addAttribute("error_message", "Please login first!");
             return "error";
         }
+        // wire into page rank algorithm
         String courseName = request.getParameter("course_name");
-        model.addAttribute("course_name", courseName);
-        return "individualCourse";
+        List<Course> courses = courseService.pageRankCourseSearch(courseName);
+        model.addAttribute("courses", courses);
+        return "results";
+    }
+
+    @GetMapping(path = "/course")
+    public String courseInfo(HttpServletRequest request, @RequestParam(name = "id") String courseId, Model model) {
+        if (!Utility.checkLoggedIn(request)) {
+            model.addAttribute("error_message", "Please login first!");
+            return "error";
+        }
+        Optional<Course> courses = courseService.findCoursesById(Integer.parseInt(courseId));
+        Course course = courses.get();
+        model.addAttribute("course", course);
+        return "courseInfo";
     }
 
 }
