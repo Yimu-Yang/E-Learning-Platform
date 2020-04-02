@@ -9,15 +9,14 @@
         <script type="application/javascript" src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
     </head>
     <body>
+        <p>Search Results Page</p><br>
 
         <div>
             <ul>
                 <li><a href="/home">home page</a></li>
                 <li><a href="/logout">logout</a></li>
             </ul>
-        </div>
-
-        <p>Search Results Page</p><br>
+        </div><br>
 
         <ol>
             <li th:each="course: ${courses}"><a th:href="@{/course(id=${course.getId()})}" th:text="${course.getCourseName()}"></a></li>
