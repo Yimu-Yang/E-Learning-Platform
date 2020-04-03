@@ -21,10 +21,10 @@ public class CourseService {
         return courses;
     }
 
-    // dynamically get top 10 popular courses, needs modification.
+    // dynamically get top 5 popular courses, needs modification.
     public List<Course> popularCourses(){
         List<Course> courses = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             int random = Utility.getRandomNumberInRange(783, 20956);
             Optional<Course> o = courseRepository.findById(random);
             if (!o.isEmpty()) {
