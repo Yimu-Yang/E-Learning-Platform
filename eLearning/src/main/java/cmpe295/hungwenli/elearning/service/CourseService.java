@@ -26,6 +26,7 @@ public class CourseService {
         List<Course> courses = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             int random = Utility.getRandomNumberInRange(783, 20956);
+            // cause mysql connection problem
             Optional<Course> o = courseRepository.findById(random);
             if (!o.isEmpty()) {
                 courses.add(o.get());
