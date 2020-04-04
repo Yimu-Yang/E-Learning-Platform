@@ -30,7 +30,7 @@ export default class App extends Component {
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div>
                     <Header {...this.props}/>
-                    {/*<SearchCourse/>*/}
+                    <SearchCourse/>
                     <Footer {...this.props}/>
                 </div>
             </MuiThemeProvider>
