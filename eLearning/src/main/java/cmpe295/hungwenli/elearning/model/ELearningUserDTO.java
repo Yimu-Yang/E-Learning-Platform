@@ -1,4 +1,4 @@
-package cmpe295.hungwenli.elearning.model.DTO;
+package cmpe295.hungwenli.elearning.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
