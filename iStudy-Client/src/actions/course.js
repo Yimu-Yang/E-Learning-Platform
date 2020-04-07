@@ -72,7 +72,8 @@ export function fetchDetailCourseDone(course=null) {
 export function fetchDetailCourse(course_no=-1) {
     return (dispatch) => {
         dispatch(fetchCourseLoading(true));
-        fetch(`${hostUrl}/courses/detail/${course_no}`)
+        console.log('$$', course_no);
+        fetch(`${hostUrl}/course/${course_no}`)
             .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText);
@@ -128,14 +129,17 @@ export function paginateCourse(response) {
 export function paginate(keyword='',page=0,limit=0,sort,callback) {
     return function (dispatch) {
         dispatch(paginateLoading(true));
-
+        console.log('--> ', page, limit);
+        // const skip = page * limit;
+        const count = (page -1) * limit;
         const sort_type = sort.field;
         const sort_order = sort.value;
 
-        const url = `${hostUrl}/paginate`+"?" + $.param({
-                keyword, page, limit, sort_type, sort_order
+        const url = `${hostUrl}/course`+"?" + $.param({
+                // keyword, page, limit, sort_type, sort_order
+            '$limit': limit, '$skip': count
             });
-
+        console.log('send');
         axios.get(url)
             .then(response => {
                 if(callback) callback();

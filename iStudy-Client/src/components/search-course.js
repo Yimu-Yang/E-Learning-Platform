@@ -77,7 +77,8 @@ class SearchCourse extends Component {
             muiTheme: getMuiTheme(),
             dialogStyle: {display: 'none'},
             keyword: '',
-            limit: 3,
+            limit: 10,
+            page: 0,
             sort: {},
             suggestions: []
         };
@@ -129,7 +130,7 @@ class SearchCourse extends Component {
         const callback = () => {
             self.setState({sort});
         };
-
+        console.log('0000', limit);
         this.props.paginate(keyword, 1, limit, sort, callback);
     };
 
@@ -146,11 +147,13 @@ class SearchCourse extends Component {
     };
 
     infiniteScroll = () => {
+        console.log('loading: ', this.props.isLoading);
         if(!this.props.isLoading) {
             const {keyword, limit, sort} = this.state;
             const {total, page} = this.props;
             const _page = page + 1;
 
+            console.log('total: ', total, page, _page);
             if (_page > 0 && _page <= total) {
                 this.props.paginate(keyword, _page, limit, sort, null);
             }
@@ -220,8 +223,8 @@ class SearchCourse extends Component {
     handleDetail = (event, course) => {
         event.preventDefault();
 
-        localStorage.setItem('course', course.no);
-        this.props.history.push('/detail');
+        localStorage.setItem('course', course.id);
+        this.props.history.push(`/detail/${course.id}`);
     };
 
     renderAuthor = (authors) => {
@@ -242,14 +245,13 @@ class SearchCourse extends Component {
 
         return (
             <div onClick={(e) => this.handleDetail(e, course)}>
-                <Card>
-                    {this.renderAuthor(course._authors)}
-                    <CardMedia
-                        overlay={<CardTitle title={course.title}
-                                            subtitle={text}/>}
-                    >
-                        <img src={`${hostUrl}/images/${course.picture}`}/>
-                    </CardMedia>
+                <Card style={{ width: "40%" }} >
+                    {/* {this.renderAuthor(course._authors)} */}
+                                    <CardMedia
+                                        overlay={<CardTitle title="" subtitle={course.course_name} />}
+                                    >
+                        <img src={course.image_url} alt=""/>
+                                    </CardMedia>
                     <CardActions>
                         <FlatButton label="Read More..."/>
                     </CardActions>

@@ -16,6 +16,9 @@ import SignIn from '../auth/signin';
 import '../../styles/detail.css';
 
 const numberWithCommas = (x) => {
+    if (_.startsWith(x, 'FREE')) {
+        return x;
+    }
     let parts = parseInt(x).toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
@@ -205,7 +208,7 @@ class CartBanner extends Component {
                         <RaisedButton label="Preview the Course" labelStyle={{textTransform: 'none'}} fullWidth={true}/>
                     </div>
                     <div style={{textAlign: 'center', marginTop: 10, marginBottom: 10}}>
-                        <strong className="text-size-second text-black">${numberWithCommas(course.price)}</strong>
+                        <strong className="text-size-second text-black">{numberWithCommas(course.price)}</strong>
                     </div>
                     {this.renderButton(course)}
                     </div>

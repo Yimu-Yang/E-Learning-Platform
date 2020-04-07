@@ -29,24 +29,24 @@ export function userData(data=null) {
 
 export function userInfo() {
     return function (dispatch) {
-        const token = localStorage.getItem('token');
-        console.log(token);
-        if(token && token.length > 0) {
-            axios.get(`${hostUrl}/token`, {
-                headers: {
-                    authorization: token
-                }
-            })
-                .then(response => {
-                    return dispatch(userData(response.data));
-                })
-                .catch(response => {
-                    return dispatch(signError(response.message));
-                });
-        }
-        else {
-            return dispatch(userData(null));
-        }
+        // const token = localStorage.getItem('token');
+        // console.log(token);
+        // if(token && token.length > 0) {
+        //     axios.get(`${hostUrl}/token`, {
+        //         headers: {
+        //             authorization: token
+        //         }
+        //     })
+        //         .then(response => {
+        //             return dispatch(userData(response.data));
+        //         })
+        //         .catch(response => {
+        //             return dispatch(signError(response.message));
+        //         });
+        // }
+        // else {
+        //     return dispatch(userData(null));
+        // }
     }
 }
 
