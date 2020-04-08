@@ -1,6 +1,6 @@
 package cmpe295.hungwenli.elearning.controller;
 
-import cmpe295.hungwenli.elearning.model.ELearningUserDTO;
+import cmpe295.hungwenli.elearning.model.DTO.ELearningUserDTO;
 import cmpe295.hungwenli.elearning.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;

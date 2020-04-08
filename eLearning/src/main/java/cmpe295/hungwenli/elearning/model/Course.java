@@ -2,19 +2,19 @@ package cmpe295.hungwenli.elearning.model;
 
 import javax.persistence.*;
 
-//import lombok.AllArgsConstructor;
-//import lombok.Builder;
-//import lombok.Data;
-//import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Define JPA and Hibernate Entity
  */
 
-//@Data
-//@Builder
-//@AllArgsConstructor
-//@NoArgsConstructor
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "course")
 public class Course {
@@ -52,113 +52,5 @@ public class Course {
     private String courseRedirectURL;
 
     @Column(name = "course_actual_url", columnDefinition = "nvarchar(255)")
-    private String courseActualURl;
-
-    public Course() {
-
-    }
-
-    public Course(Integer id, String courseName, String provider, String price, String rating, String courseDescription, String imageURL,
-                  String videoURL, String courseTalkURL, String courseRedirectURL, String courseActualURl) {
-        this.id = id;
-        this.courseName = courseName;
-        this.provider = provider;
-        this.price = price;
-        this.rating = rating;
-        this.courseDescription = courseDescription;
-        this.imageURL = imageURL;
-        this.videoURL = videoURL;
-        this.courseTalkURL = courseTalkURL;
-        this.courseRedirectURL = courseRedirectURL;
-        this.courseActualURl = courseActualURl;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public String getProvider() {
-        return provider;
-    }
-
-    public void setProvider(String provider) {
-        this.provider = provider;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
-    public String getCourseDescription() {
-        return courseDescription;
-    }
-
-    public void setCourseDescription(String courseDescription) {
-        this.courseDescription = courseDescription;
-    }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
-
-    public String getVideoURL() {
-        return videoURL;
-    }
-
-    public void setVideoURL(String videoURL) {
-        this.videoURL = videoURL;
-    }
-
-    public String getCourseTalkURL() {
-        return courseTalkURL;
-    }
-
-    public void setCourseTalkURL(String courseTalkURL) {
-        this.courseTalkURL = courseTalkURL;
-    }
-
-    public String getCourseRedirectURL() {
-        return courseRedirectURL;
-    }
-
-    public void setCourseRedirectURL(String courseRedirectURL) {
-        this.courseRedirectURL = courseRedirectURL;
-    }
-
-    public String getCourseActualURl() {
-        return courseActualURl;
-    }
-
-    public void setCourseActualURl(String courseActualURl) {
-        this.courseActualURl = courseActualURl;
-    }
-
+    private String courseActualURL;
 }

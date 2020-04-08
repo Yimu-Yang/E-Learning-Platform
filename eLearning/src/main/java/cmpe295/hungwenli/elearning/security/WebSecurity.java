@@ -17,8 +17,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cmpe295.hungwenli.elearning.security.SecurityConstants.SIGN_IN_URL;
-import static cmpe295.hungwenli.elearning.security.SecurityConstants.SIGN_UP_URL;
+import static cmpe295.hungwenli.elearning.security.SecurityConstants.*;
 
 @Configuration
 @EnableWebSecurity
@@ -40,6 +39,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers(HttpMethod.POST, SIGN_IN_URL).permitAll()
+                .antMatchers(HttpMethod.GET, COURSE_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
