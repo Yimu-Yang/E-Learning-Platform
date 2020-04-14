@@ -67,6 +67,13 @@ public class CourseService {
         return courseDto;
     }
 
+    public List<CourseDTO> searchCourseByKeywords(String keywords) {
+
+        List<CourseDTO> res = new ArrayList<>();
+
+        return res;
+    }
+
     public List<Course> findCoursesByName(String courseName){
         return courseRepository.findCourseByCourseName(courseName);
     }

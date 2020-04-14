@@ -41,10 +41,16 @@ public class CourseController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/course/search", produces = "application/json")
+    public HttpEntity<List<CourseDTO>> searchCourseByKeywords(@RequestParam String keywords) {
+        List<CourseDTO> courses = courseService.searchCourseByKeywords(keywords);
+
+        return new ResponseEntity<>(courses, HttpStatus.OK);
+    }
+
     @PostMapping(path = "/findCourseByName_notInUsedService", produces = "application/json")
     public HttpEntity findCourseByName(@RequestBody Map<String, String> payload) {
         List<Course> courses = courseService.findCoursesByName(payload.get("course_name"));
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
-
 }
