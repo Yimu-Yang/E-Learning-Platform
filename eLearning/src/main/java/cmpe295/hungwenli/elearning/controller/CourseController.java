@@ -48,9 +48,4 @@ public class CourseController {
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/findCourseByName_notInUsedService", produces = "application/json")
-    public HttpEntity findCourseByName(@RequestBody Map<String, String> payload) {
-        List<Course> courses = courseService.findCoursesByName(payload.get("course_name"));
-        return new ResponseEntity<>(courses, HttpStatus.OK);
-    }
 }

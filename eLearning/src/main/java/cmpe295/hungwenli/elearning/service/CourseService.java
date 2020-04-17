@@ -17,6 +17,9 @@ public class CourseService {
     @Autowired
     CourseRepository courseRepository;
 
+    @Autowired
+    TFIDFService tfidfService;
+
     public Map<String, Object> findAllCourse(int skip, int limit) {
         Map<String, Object> result = new HashMap<>();
 
@@ -71,11 +74,26 @@ public class CourseService {
 
         List<CourseDTO> res = new ArrayList<>();
 
-        return res;
-    }
+        List<String> courseList = tfidfService.search(10, keywords);
 
-    public List<Course> findCoursesByName(String courseName){
-        return courseRepository.findCourseByCourseName(courseName);
+        for (String name: courseList) {
+            Course course = courseRepository.findCourseByCourseName(name);
+            if (course == null) continue;
+            CourseDTO courseDto = new CourseDTO(course.getId(),
+                    course.getCourseName(),
+                    course.getProvider(),
+                    course.getPrice(),
+                    course.getRating(),
+                    course.getCourseDescription(),
+                    course.getImageURL(),
+                    course.getVideoURL(),
+                    course.getCourseTalkURL(),
+                    course.getCourseRedirectURL(),
+                    course.getCourseActualURL());
+            res.add(courseDto);
+        }
+
+        return res;
     }
 
 }

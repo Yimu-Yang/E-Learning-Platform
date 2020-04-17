@@ -12,7 +12,7 @@ public interface CourseRepository extends CrudRepository<Course, Integer> {
 
     List<Course> findAll();
     Course findCourseById(Integer id);
-    List<Course> findCourseByCourseName(String courseName);
+    Course findCourseByCourseName(String courseName);
 
     @Query(value = "SELECT min(id) FROM Course")
     Integer min();
