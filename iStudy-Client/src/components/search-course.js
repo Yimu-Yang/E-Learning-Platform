@@ -14,6 +14,7 @@ import centerComponent from 'react-center-component';
 import CircularProgress from 'material-ui/CircularProgress';
 import Autosuggest from 'react-autosuggest';
 import '../../styles/suggestions.css';
+import defaultImage from '../../public/assets/images/default-course.jpg'
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
@@ -77,7 +78,8 @@ class SearchCourse extends Component {
             muiTheme: getMuiTheme(),
             dialogStyle: {display: 'none'},
             keyword: '',
-            limit: 3,
+            limit: 9,
+            page: 0,
             sort: {},
             suggestions: []
         };
@@ -129,7 +131,7 @@ class SearchCourse extends Component {
         const callback = () => {
             self.setState({sort});
         };
-
+        console.log('0000', limit);
         this.props.paginate(keyword, 1, limit, sort, callback);
     };
 
@@ -146,11 +148,13 @@ class SearchCourse extends Component {
     };
 
     infiniteScroll = () => {
+        console.log('loading: ', this.props.isLoading);
         if(!this.props.isLoading) {
             const {keyword, limit, sort} = this.state;
             const {total, page} = this.props;
             const _page = page + 1;
 
+            console.log('total: ', total, page, _page);
             if (_page > 0 && _page <= total) {
                 this.props.paginate(keyword, _page, limit, sort, null);
             }
@@ -220,8 +224,8 @@ class SearchCourse extends Component {
     handleDetail = (event, course) => {
         event.preventDefault();
 
-        localStorage.setItem('course', course.no);
-        this.props.history.push('/detail');
+        localStorage.setItem('course', course.id);
+        this.props.history.push(`/detail/${course.id}`);
     };
 
     renderAuthor = (authors) => {
@@ -241,15 +245,14 @@ class SearchCourse extends Component {
         const text = `${numberWithCommas(course.enrolled)} students enrolled, rating: ${course.average} (${numberWithCommas(course.reviews)} reviews), Last updated ${dateFormat(course.updated, "m/yyyy")}`;
 
         return (
-            <div onClick={(e) => this.handleDetail(e, course)}>
-                <Card>
-                    {this.renderAuthor(course._authors)}
-                    <CardMedia
-                        overlay={<CardTitle title={course.title}
-                                            subtitle={text}/>}
-                    >
-                        <img src={`${hostUrl}/images/${course.picture}`}/>
-                    </CardMedia>
+            <div className="aa" onClick={(e) => this.handleDetail(e, course)} style={{}}>
+                <Card style={{}} >
+                    {/* {this.renderAuthor(course._authors)} */}
+                                    <CardMedia
+                                        overlay={<CardTitle title="" subtitle={course.course_name} />}
+                                    >
+                        <img src={_.startsWith(course.image_url, 'http') ? course.image_url : defaultImage } alt=""/>
+                                    </CardMedia>
                     <CardActions>
                         <FlatButton label="Read More..."/>
                     </CardActions>
@@ -261,7 +264,10 @@ class SearchCourse extends Component {
     renderCourses = () => {
         return _.map(this.props.courses, (course, i) => {
             return (
-                <div key={i}>{this.courseDetail(course)}</div>);
+                <div key={i} style={{ 
+                    width: "30%",
+                    padding: '0 40px 40px 40px'
+                }}>{this.courseDetail(course)}</div>);
         });
     };
 
@@ -298,7 +304,12 @@ class SearchCourse extends Component {
                     </div>
                     <div style={{
                         marginTop: 30,
-                        marginBottom: 30
+                        marginBottom: 30,
+                        display: 'flex',
+                        justifyContent:'center',
+                        flexDirection: 'row',
+                        alignItems:'center',
+                        flexWrap: 'wrap'
                     }}>
                         {this.renderCourses()}
                     </div>

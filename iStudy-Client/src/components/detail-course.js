@@ -9,6 +9,8 @@ import {connect} from 'react-redux';
 import {fetchDetailCourse} from '../actions/course';
 import centerComponent from 'react-center-component';
 import CircularProgress from 'material-ui/CircularProgress';
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import defaultImage from '../../public/assets/images/default-course.jpg'
 
 import ShowMore from 'react-show-more';
 
@@ -50,6 +52,7 @@ class DetailCourse extends Component {
     };
 
     componentDidMount() {
+        console.log('11');
         this.setState({
             dialogStyle: {
                 display: 'flex',
@@ -66,19 +69,20 @@ class DetailCourse extends Component {
 
         window.scrollTo(0, 0);
 
+        console.log('--', this.props.match.params);
         this.props.fetchDetailCourse(this.props.match.params.id);
     }
 
     renderState = () => {
-        if (this.props.hasError) {
-            return (
-                <div className="alert alert-danger">
-                    <div style={{textAlign: 'center'}}>
-                        <strong>There was a loading error</strong>
-                    </div>
-                </div>
-            );
-        }
+        // if (this.props.hasError) {
+        //     return (
+        //         <div className="alert alert-danger">
+        //             <div style={{textAlign: 'center'}}>
+        //                 <strong>There was a loading error</strong>
+        //             </div>
+        //         </div>
+        //     );
+        // }
 
         if (this.props.isLoading) {
             return (
@@ -157,31 +161,37 @@ class DetailCourse extends Component {
                     <div className="col-sm-12">
                         <div className="container">
                             <div className="row body-content">
+                                <div className="col-sm-2"></div>
                                 <div className="col-sm-8">
                                     <br/>
+                                    <CardMedia
+                                        overlay={<CardTitle title="" subtitle={course.course_name} />}
+                                    >
+                                        <img src={_.startsWith(course.image_url, 'http') ? course.image_url : defaultImage} alt="" />
+                                    </CardMedia>
                                     <br/>
-                                    <div className="text-white text-size-first">{course.title}</div>
+                                    <div className="text-white text-size-first">{course.course_name}</div>
                                     <br/>
                                     <div className="text-white text-size-second">{course.subtitle}</div>
                                     <div className="text-white text-size-third">rating: <span
-                                        className="text-emphasis-first">{course.average}</span> (<span
-                                        className="text-emphasis-second">{numberWithCommas(course.reviews)}</span> reviews)
+                                        className="text-emphasis-first">{course.rating}</span> 
+                                        {/* (<span className="text-emphasis-second">{numberWithCommas(course.reviews)}</span> reviews) */}
                                     </div>
-                                    <div className="text-white text-size-third text"><span
+                                    {/* <div className="text-white text-size-third text"><span
                                         className="text-emphasis-third">{numberWithCommas(course.enrolled)}</span> students enrolled
-                                    </div>
+                                    </div> */}
                                     <div className="text-white text-size-third text">Created
-                                        by {this.authorNames(course._authors)}</div>
+                                        by {course.provider}</div>
                                     <div className="text-white text-size-third text">Last updated <span
                                         className="text-emphasis-third">{dateFormat(course.updated, "m/yyyy")}</span>
                                     </div>
                                 </div>
-                                <div className="col-sm-4">
+                                {/* <div className="col-sm-4">
                                     <div style={{marginTop:30}} className="hidden-xs">
                                     </div>
                                     <br/>
                                     <CartBanner course={course}/>
-                                </div>
+                                </div> */}
                             </div>
                             <div className="row body-content hidden-xs">
                                 <div className="col-sm-12">
@@ -196,6 +206,7 @@ class DetailCourse extends Component {
                 <div className="container">
                     <div className="row body-content">
                         <div className="col-sm-offset-1 col-sm-10">
+
                             <br/>
                             <br/>
                             <div className="text-size-second text-bold">Description</div>
@@ -206,15 +217,22 @@ class DetailCourse extends Component {
                                 less='Show less'
                                 anchorClass=''
                             >
-                                <div dangerouslySetInnerHTML={ {__html: unescape(course.description)} }/>
+                                <div dangerouslySetInnerHTML={{ __html: unescape(course.course_description)} }/>
                             </ShowMore>
                             <br/>
                             <br/>
                             <Curriculum/>
+                            <br />
+                            <ul>
+                                <li><a href={course.video_url}>Video URL</a></li>
+                                <li><a href={course.coursetalk_url}>Course Talk URL</a></li>
+                                <li><a href={course.course_redirect_url}>Course Redirect URL</a></li>
+                                <li><a href={course.course_actual_url}>Course Actual URL</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div className="container">
+                {/* <div className="container">
                     <div className="row body-content">
                         <div className="col-sm-offset-1 col-sm-10">
                             <br/>
@@ -231,7 +249,7 @@ class DetailCourse extends Component {
                 <br/>
                 <div className="container">
                     <Comment/>
-                </div>
+                </div> */}
             </div>
         );
     };

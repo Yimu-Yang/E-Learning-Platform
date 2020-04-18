@@ -53,7 +53,7 @@ class Header extends Component {
     };
 
     menuUser = () => {
-        let avatar_image = `${hostUrl}/images/anonymous.png`;
+        let avatar_image = `/public/assets/images/anonymous.png`;
         let name ='';
         let email = '';
 
