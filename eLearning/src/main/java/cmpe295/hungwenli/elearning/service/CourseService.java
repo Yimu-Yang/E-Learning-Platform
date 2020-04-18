@@ -25,7 +25,7 @@ public class CourseService {
     public List<Course> popularCourses(){
         List<Course> courses = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            int random = Utility.getRandomNumberInRange(20957, 41674);
+            int random = Utility.getRandomNumberInRange(1, 20956);
             // cause mysql connection problem
             Optional<Course> o = courseRepository.findById(random);
             if (!o.isEmpty()) {
@@ -40,7 +40,7 @@ public class CourseService {
         List<Course> courses = courseRepository.findByCourseName(courseName);
         // demo results, needs modification!
         for (int i = 0; i < 4; i++) {
-            int random = Utility.getRandomNumberInRange(20957, 41674);
+            int random = Utility.getRandomNumberInRange(1, 20956);
             Optional<Course> o = courseRepository.findById(random);
             if (!o.isEmpty()) {
                 courses.add(o.get());
