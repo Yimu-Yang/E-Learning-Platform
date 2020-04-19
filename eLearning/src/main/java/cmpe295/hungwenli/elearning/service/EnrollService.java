@@ -63,4 +63,13 @@ public class EnrollService {
         return courses;
     }
 
+    public void unenroll(String userName, Long courseId) {
+        ELearningUser currentUser = userRepository.findByUserName(userName);
+        Course currentCourse = courseRepository.findCourseById(courseId);
+
+        Enroll enroll = enrollRepository.findEnrollByCourseAndUser(currentCourse, currentUser);
+
+        enrollRepository.delete(enroll);
+    }
+
 }
