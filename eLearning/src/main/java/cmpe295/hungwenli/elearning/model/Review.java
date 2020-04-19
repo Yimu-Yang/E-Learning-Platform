@@ -31,6 +31,6 @@ public class Review {
     @Lob
     private String comment;
 
-    @Column(name = "rating", nullable = false, columnDefinition = "int(255)")
+    @Column(name = "rating", nullable = false, columnDefinition = "varchar(100)")
     private String rating;
 }
