@@ -17,7 +17,7 @@ import {hostUrl} from '../../config';
 
 import Header from './header';
 import Footer from './footer';
-
+import defaultImage from '../../public/assets/images/default-course.jpg';
 import '../../styles/detail.css';
 
 @centerComponent
@@ -149,7 +149,7 @@ class ViewCourses extends Component {
                 }}>
                     <div
                         style={{marginLeft: 3, marginRight: 3, marginTop: 12, marginBottom: 8, overflow: 'hidden'}}>
-                        <img style={{ width: '100%', height: '100%' }} src={`${course.image_url}`}/>
+                        <img style={{ width: '100%', height: '100%' }} src={_.startsWith(course.image_url, 'http') ? course.image_url : defaultImage} alt="" />
                     </div>
                     <hr/>
                     <div className="text-size-fifth">
@@ -178,7 +178,7 @@ class ViewCourses extends Component {
 
         if(courses) {
             localStorage.setItem('enrolled', JSON.stringify(_.map(courses, course => course.id)));
-            
+
             if(courses.length <= 0) {
                 return (
                     <div className="text-size-second text-bold text-center" style={{marginTop: 140, marginBottom: 140}}>
