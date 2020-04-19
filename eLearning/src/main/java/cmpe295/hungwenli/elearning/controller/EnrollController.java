@@ -18,14 +18,15 @@ public class EnrollController {
     @Autowired
     EnrollService enrollService;
 
-    @GetMapping(path = "/enroll", produces = "application/json")
+    @PostMapping(path = "/enroll", produces = "application/json")
     public HttpEntity<String> enroll(@RequestParam Map<String, String> param) {
 
         String userName = String.valueOf(param.get("user_name"));
         Long courseId = Long.valueOf(param.get("course_id"));
 
-        enrollService.enroll(userName, courseId);
+        boolean success = enrollService.enroll(userName, courseId);
 
+        if (!success) return new ResponseEntity<>("You already enrolled this course!", HttpStatus.CONFLICT);
         return new ResponseEntity<>("Enrolled successfully!", HttpStatus.OK);
     }
 

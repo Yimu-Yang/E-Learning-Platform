@@ -25,11 +25,16 @@ public class EnrollService {
     @Autowired
     EnrollRepository enrollRepository;
 
-    public void enroll(String userName, Long courseId) {
+    public boolean enroll(String userName, Long courseId) {
         ELearningUser currentUser = userRepository.findByUserName(userName);
         Course currentCourse = courseRepository.findCourseById(courseId);
 
+        if (enrollRepository.findEnrollByCourseAndUser(currentCourse, currentUser) != null) {
+            return false;
+        }
+
         enrollRepository.save(Enroll.builder().course(currentCourse).user(currentUser).build());
+        return true;
     }
 
     public List<CourseDTO> myCourse(String userName) {
