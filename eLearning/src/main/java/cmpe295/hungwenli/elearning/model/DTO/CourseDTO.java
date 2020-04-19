@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CourseDTO {
 
-    private Integer id;
+    private Long id;
 
     private String course_name;
 
