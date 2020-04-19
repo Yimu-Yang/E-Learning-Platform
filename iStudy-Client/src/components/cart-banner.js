@@ -95,11 +95,11 @@ class CartBanner extends Component {
         }
     };
 
-    addToCart = () => {
+    addToCart = (unenroll=false) => {
         if (this.props.logged) {
             const { course, user} = this.props;
             console.log('cart user: ', user, course);
-            this.props.addCart(course.id, user.email);
+            this.props.addCart(course.id, user.email, unenroll);
         }
         else {
             this.handleOpen();
@@ -160,13 +160,12 @@ class CartBanner extends Component {
 
 
         const enrolled = JSON.parse(localStorage.getItem("enrolled"));
-        const course_id = localStorage.getItem("course");
+        const course_id = parseInt(localStorage.getItem("course"));
 
-        // console.log('en: ', enrolled, course_id)
-        const enrollButton = enrolled.includes(course_id) ? 
-            (<RaisedButton label="Enroll" size={40} primary={true} fullWidth={true} onTouchTap={() => this.addToCart()}/>) : 
-            (<RaisedButton label="Enrolled" size={40} primary={true} fullWidth={true} disabled={true} />);
-
+        const isEnrolled = enrolled.includes(course_id);
+        // console.log('enrolled: ', enrolled, course_id, isEnrolled);
+        
+        const enrollButton = (<RaisedButton label={isEnrolled ? 'UnEnroll' : 'Enroll'} size={40} primary={true} fullWidth={true} onTouchTap={() => this.addToCart(isEnrolled)} />);
 
         return (
             <div>
@@ -242,7 +241,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => {
     return {
         buyCourse: (course_no) => dispatch(buyCourse(course_no)),
-        addCart: (course_no, user_name) => dispatch(addCart(course_no, user_name)),
+        addCart: (course_no, user_name, unenroll) => dispatch(addCart(course_no, user_name, unenroll)),
         userInfo: () => dispatch(userInfo())
     }
 };

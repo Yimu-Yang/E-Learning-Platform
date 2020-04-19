@@ -71,22 +71,26 @@ export function listCart() {
     }
 }
 
-export function addCart(course_no=-1, user_name='') {
+export function addCart(course_no = -1, user_name = '', unenroll=false) {
     return function (dispatch) {
-        const url = `${hostUrl}/enroll` + "?" + $.param({
+        const signature = unenroll ? 'unenroll' : 'enroll';
+        const url = `${hostUrl}/${signature}` + "?" + $.param({
             course_id: course_no, user_name
         });
 
+        console.log('url: ', url);
+        // return;
         axios.post(url)
-            .then(response => {
-                setTimeout(() => {
-                    return history.push(`/view-courses`);
-                }, 1000);
-            })
-            .catch(response => {
+        .then(response => {
+            setTimeout(() => {
                 return history.push(`/view-courses`);
-                // return dispatch(cartError(response.message));
-            });
+            }, 1000);
+        })
+        .catch(response => {
+            return history.push(`/view-courses`);
+            // return dispatch(cartError(response.message));
+        });
+
         // axios.post(`${hostUrl}/enroll`, { course_id: course_no, user_name}, {
         //     headers: {
         //         'Accept': 'application/json, text/plain, */*',

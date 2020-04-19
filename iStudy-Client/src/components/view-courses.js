@@ -177,6 +177,8 @@ class ViewCourses extends Component {
         const {courses} = this.props;
 
         if(courses) {
+            localStorage.setItem('enrolled', JSON.stringify(_.map(courses, course => course.id)));
+            
             if(courses.length <= 0) {
                 return (
                     <div className="text-size-second text-bold text-center" style={{marginTop: 140, marginBottom: 140}}>
@@ -184,7 +186,7 @@ class ViewCourses extends Component {
                     </div>
                 );
             }
-            localStorage.setItem('enrolled', JSON.stringify(_.map(courses, course => course.id)));
+            
             
             const rows =_.map(courses, (course, i) => {
                 if ((i % 3) === 0) {
