@@ -41,7 +41,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/myEnrolls**").permitAll()
                 .antMatchers(HttpMethod.POST, "/add-comment**").permitAll()
                 .antMatchers(HttpMethod.GET, "/comments**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/unenroll**").permitAll()
+                .antMatchers(HttpMethod.POST, "/unenroll**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))

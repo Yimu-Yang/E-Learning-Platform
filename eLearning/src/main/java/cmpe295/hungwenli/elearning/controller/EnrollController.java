@@ -41,7 +41,7 @@ public class EnrollController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "/unenroll", produces = "application/json")
+    @PostMapping(path = "/unenroll", produces = "application/json")
     public HttpStatus unenroll(@RequestParam Map<String, String> param) {
         try {
             String userName = String.valueOf(param.get("user_name"));
