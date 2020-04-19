@@ -61,7 +61,7 @@ export function listComment(course_no=-1,page=0,limit=0,reload=false) {
     return function (dispatch) {
         dispatch(commentLoading(true));
         const url = `${hostUrl}/comments`+"?" + $.param({
-                course_no, page, limit
+                course_id: course_no, page, limit
         });
 
         axios.get(url)
@@ -82,10 +82,11 @@ export function listComment(course_no=-1,page=0,limit=0,reload=false) {
     }
 }
 
-export function addComment(course_no=-1,page=0,limit=0,content,rating,helpful, failed = null) {
+export function addComment(course_no=-1,page=0,limit=0,content,rating,helpful, failed = null, user_name) {
     return function (dispatch) {
         dispatch(commentLoading(true));
-        axios.post(`${hostUrl}/add-comment`, {course_no,content,rating,helpful}, {
+        // console.log('addComment: ', user_name)
+        axios.post(`${hostUrl}/add-comment`, {user_name,course_no,content,rating,helpful}, {
             headers: {
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json',
@@ -93,7 +94,7 @@ export function addComment(course_no=-1,page=0,limit=0,content,rating,helpful, f
             }
         })
             .then(response => {
-                return history.push(`/detail`);
+                return history.push(`/detail/${course_no}`);
             })
             .catch(response => {
                 if(failed) failed();

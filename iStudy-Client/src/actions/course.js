@@ -151,7 +151,7 @@ export function paginate(keyword='',page=0,limit=0,sort,callback) {
             .then(response => {
                 if(callback) callback();
 
-                console.log('course response: ', response);
+                // console.log('course response: ', response);
                 const {data} = response;
                 
                 let courses = response.data;

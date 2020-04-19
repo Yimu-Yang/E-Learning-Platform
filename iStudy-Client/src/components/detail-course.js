@@ -11,6 +11,8 @@ import centerComponent from 'react-center-component';
 import CircularProgress from 'material-ui/CircularProgress';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import defaultImage from '../../public/assets/images/default-course.jpg'
+import Widget from 'react-chat-widget';
+import logo from './logo.svg';
 
 import ShowMore from 'react-show-more';
 
@@ -21,6 +23,30 @@ import Curriculum from './curriculum';
 import Comment from './comment';
 
 import '../../styles/detail.css';
+
+const widgetStyles = {
+    header: {
+        backgroundColor: '#334588'
+    },
+    launcher: {
+        backgroundColor: '#334588'
+    },
+    message: {
+        backgroundColor: '#cdd8ec'
+    },
+    snippet: {
+        info: {
+            borderLeft: '2px solid #cdd8ec'
+        }
+    }
+}
+
+
+const handleNewUserMessage = (newMessage) => {
+  console.log(`New message incoming! ${newMessage}`);
+  // Now send the message throught the backend API
+};
+
 
 const numberWithCommas = (x) => {
     let parts = parseInt(x).toString().split(".");
@@ -52,7 +78,6 @@ class DetailCourse extends Component {
     };
 
     componentDidMount() {
-        console.log('11');
         this.setState({
             dialogStyle: {
                 display: 'flex',
@@ -66,10 +91,11 @@ class DetailCourse extends Component {
                 left: this.props.leftOffset
             }
         });
+        
 
         window.scrollTo(0, 0);
 
-        console.log('--', this.props.match.params);
+        localStorage.setItem('course', this.props.match.params.id);
         this.props.fetchDetailCourse(this.props.match.params.id);
     }
 
@@ -161,7 +187,6 @@ class DetailCourse extends Component {
                     <div className="col-sm-12">
                         <div className="container">
                             <div className="row body-content">
-                                <div className="col-sm-2"></div>
                                 <div className="col-sm-8">
                                     <br/>
                                     <CardMedia
@@ -186,12 +211,12 @@ class DetailCourse extends Component {
                                         className="text-emphasis-third">{dateFormat(course.updated, "m/yyyy")}</span>
                                     </div>
                                 </div>
-                                {/* <div className="col-sm-4">
+                                <div className="col-sm-4">
                                     <div style={{marginTop:30}} className="hidden-xs">
                                     </div>
                                     <br/>
                                     <CartBanner course={course}/>
-                                </div> */}
+                                </div>
                             </div>
                             <div className="row body-content hidden-xs">
                                 <div className="col-sm-12">
@@ -221,14 +246,14 @@ class DetailCourse extends Component {
                             </ShowMore>
                             <br/>
                             <br/>
-                            <Curriculum/>
+                            {/* <Curriculum/>
                             <br />
                             <ul>
                                 <li><a href={course.video_url}>Video URL</a></li>
                                 <li><a href={course.coursetalk_url}>Course Talk URL</a></li>
                                 <li><a href={course.course_redirect_url}>Course Redirect URL</a></li>
                                 <li><a href={course.course_actual_url}>Course Actual URL</a></li>
-                            </ul>
+                            </ul> */}
                         </div>
                     </div>
                 </div>
@@ -245,11 +270,11 @@ class DetailCourse extends Component {
                 <div className="container">
                     {this.renderAuthor(course._authors)}
                     <br/>
-                </div>
+                </div> */}
                 <br/>
                 <div className="container">
                     <Comment/>
-                </div> */}
+                </div>
             </div>
         );
     };
@@ -268,6 +293,14 @@ class DetailCourse extends Component {
                     {this.renderCourse()}
                 </div>
                 <Footer {...this.props}/>
+                {/* <Widget
+                  responseMessages={[]}
+                  handleNewUserMessage={this.sendMessage}
+                  stylesInjected={widgetStyles}
+                  profileAvatar={logo}
+                  title="iStudy"
+                  subtitle="we're here to help"
+                /> */}
             </div>
         );
     }

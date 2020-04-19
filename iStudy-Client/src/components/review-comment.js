@@ -102,7 +102,7 @@ class ReviewComment extends Component {
 
     submitForm = (values) => {
         if (this.props.logged) {
-            const {isSubmitting} = this.state;
+            const {isSubmitting, auth} = this.state;
 
             if(isSubmitting) return;
 
@@ -125,10 +125,11 @@ class ReviewComment extends Component {
                     const page = 1;
                     const limit = 4;
                     const helpful = false;
-
+                    
+                    console.log('user: ', this.props.user.email)
                     const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
                     return sleep(300).then(() => {
-                        this.props.addComment(course_no, page, limit, content, rating, helpful, failed);
+                        this.props.addComment(course_no, page, limit, content, rating, helpful, failed, this.props.user.email);
                     });
                 }
             }
@@ -318,7 +319,7 @@ const form = reduxForm({
 const mapDispatchToProps = dispatch => {
     return {
         commentError: (error) => dispatch(commentError(error)),
-        addComment: (course_no,page,limit,content,rating,helpful, failed) => dispatch(addComment(course_no,page,limit,content,rating,helpful, failed)),
+        addComment: (course_no,page,limit,content,rating,helpful, failed, user_name) => dispatch(addComment(course_no,page,limit,content,rating,helpful, failed, user_name)),
         userInfo: () => dispatch(userInfo())
     }
 };

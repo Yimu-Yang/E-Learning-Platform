@@ -88,7 +88,7 @@ class CartBanner extends Component {
         if (this.props.logged) {
             const {course} = this.props;
 
-            this.props.buyCourse(course.no);
+            this.props.buyCourse(course.id);
         }
         else {
             this.handleOpen();
@@ -97,9 +97,9 @@ class CartBanner extends Component {
 
     addToCart = () => {
         if (this.props.logged) {
-            const {course} = this.props;
-
-            this.props.addCart(course.no);
+            const { course, user} = this.props;
+            console.log('cart user: ', user, course);
+            this.props.addCart(course.id, user.email);
         }
         else {
             this.handleOpen();
@@ -133,7 +133,7 @@ class CartBanner extends Component {
         let filtered = null;
 
         if (course) {
-            if (user) {
+            if (user && user.courses) {
                 filtered = user.courses.filter(function (_course) {
                     if (_course.no === course.no) {
                         return _course;
@@ -158,15 +158,26 @@ class CartBanner extends Component {
             }
         }
 
+
+        const enrolled = JSON.parse(localStorage.getItem("enrolled"));
+        const course_id = localStorage.getItem("course");
+
+        // console.log('en: ', enrolled, course_id)
+        const enrollButton = enrolled.includes(course_id) ? 
+            (<RaisedButton label="Enroll" size={40} primary={true} fullWidth={true} onTouchTap={() => this.addToCart()}/>) : 
+            (<RaisedButton label="Enrolled" size={40} primary={true} fullWidth={true} disabled={true} />);
+
+
         return (
             <div>
                 <div style={{textAlign: 'center', marginBottom: 6}}>
-                    <RaisedButton label="Buy" secondary={true} fullWidth={true}
-                                  onTouchTap={() => this.buyCourse()}/>
+                    <RaisedButton label="Go to course" secondary={true} fullWidth={true}
+                        href={course.course_actual_url}
+                        target="_blank"
+                    />
                 </div>
                 <div style={{textAlign: 'center', marginBottom: 6}}>
-                    <RaisedButton label="Add to Cart" size={40} primary={true} fullWidth={true}
-                                  onTouchTap={() => this.addToCart()}/>
+                    {enrollButton}
                 </div>
             </div>
         );
@@ -203,13 +214,7 @@ class CartBanner extends Component {
                     <div style={{textAlign: 'center'}}>
                         {this.renderPicture(course)}
                     </div>
-                    <div style={{marginBottom:6}}/>
-                    <div style={{textAlign: 'center',marginTop: 6}}>
-                        <RaisedButton label="Preview the Course" labelStyle={{textTransform: 'none'}} fullWidth={true}/>
-                    </div>
-                    <div style={{textAlign: 'center', marginTop: 10, marginBottom: 10}}>
-                        <strong className="text-size-second text-black">{numberWithCommas(course.price)}</strong>
-                    </div>
+                    <div style={{marginTop:20}}/>
                     {this.renderButton(course)}
                     </div>
                 </Paper>
@@ -237,7 +242,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => {
     return {
         buyCourse: (course_no) => dispatch(buyCourse(course_no)),
-        addCart: (course_no) => dispatch(addCart(course_no)),
+        addCart: (course_no, user_name) => dispatch(addCart(course_no, user_name)),
         userInfo: () => dispatch(userInfo())
     }
 };

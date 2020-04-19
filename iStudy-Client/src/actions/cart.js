@@ -71,21 +71,35 @@ export function listCart() {
     }
 }
 
-export function addCart(course_no=-1) {
+export function addCart(course_no=-1, user_name='') {
     return function (dispatch) {
-        axios.post(`${hostUrl}/add-cart`, {course_no}, {
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('token')
-            }
-        })
+        const url = `${hostUrl}/enroll` + "?" + $.param({
+            course_id: course_no, user_name
+        });
+
+        axios.post(url)
             .then(response => {
-                return history.push(`/list-cart`);
+                setTimeout(() => {
+                    return history.push(`/view-courses`);
+                }, 1000);
             })
             .catch(response => {
-                return dispatch(cartError(response.message));
+                return history.push(`/view-courses`);
+                // return dispatch(cartError(response.message));
             });
+        // axios.post(`${hostUrl}/enroll`, { course_id: course_no, user_name}, {
+        //     headers: {
+        //         'Accept': 'application/json, text/plain, */*',
+        //         'Content-Type': 'application/json',
+        //         'Authorization': localStorage.getItem('token')
+        //     }
+        // })
+        //     .then(response => {
+        //         return history.push(`/list-cart`);
+        //     })
+        //     .catch(response => {
+        //         return dispatch(cartError(response.message));
+        //     });
     }
 }
 
