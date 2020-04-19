@@ -12,8 +12,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import defaultImage from '../../public/assets/images/default-course.jpg'
 import Widget from 'react-chat-widget';
-import logo from './logo.svg';
-
+import { userInfo } from '../actions';
 import ShowMore from 'react-show-more';
 
 import Header from './header';
@@ -22,9 +21,11 @@ import CartBanner from './cart-banner';
 import Curriculum from './curriculum';
 import Comment from './comment';
 
+
 import '../../styles/detail.css';
 
 const widgetStyles = {
+    avatar: {display: 'none'},
     header: {
         backgroundColor: '#334588'
     },
@@ -40,6 +41,7 @@ const widgetStyles = {
         }
     }
 }
+
 
 
 const handleNewUserMessage = (newMessage) => {
@@ -60,9 +62,13 @@ class DetailCourse extends Component {
         super(props);
         this.state = {
             muiTheme: getMuiTheme(),
-            dialogStyle: {display: 'none'}
+            dialogStyle: {display: 'none'},
+            ws: new WebSocket('ws://localhost:3030'),
+            messages: []
         };
     }
+
+    
 
     static childContextTypes = {
         muiTheme: PropTypes.object
@@ -91,12 +97,50 @@ class DetailCourse extends Component {
                 left: this.props.leftOffset
             }
         });
-        
 
         window.scrollTo(0, 0);
 
+        const token = localStorage.getItem('token');
+        if(token) {
+            console.log('---')
+            this.props.userInfo();
+        }
+
         localStorage.setItem('course', this.props.match.params.id);
         this.props.fetchDetailCourse(this.props.match.params.id);
+
+        this.state.ws.onopen = () => {
+            // on connecting, do nothing but log it to the console
+            console.log('socket connected')
+        }
+
+        this.state.ws.onmessage = evt => {
+            // on receiving a message, add it to the list of messages
+            const message = JSON.parse(evt.data)
+            console.log('on receive msg: ', message);
+            this.addMessage(message)
+        }
+
+        this.state.ws.onclose = () => {
+            console.log('disconnected')
+            // automatically try to reconnect on connection loss
+            this.setState({
+                ws: new WebSocket(URL),
+            })
+        }
+    }
+
+    addMessage = message => this.setState(state => ({ messages: [
+        message, ...state.messages] }))
+
+    sendMessage = (newMessage) => {
+        console.log(`New message incomig! ${newMessage}`, this.props);
+        const massge = {
+            type: 'text',
+            text: `<${this.props.user.email}> : ${newMessage}`
+        }
+        // Now send the message throught the backend API
+        this.state.ws.send(JSON.stringify(massge))
     }
 
     renderState = () => {
@@ -293,14 +337,14 @@ class DetailCourse extends Component {
                     {this.renderCourse()}
                 </div>
                 <Footer {...this.props}/>
-                {/* <Widget
-                  responseMessages={[]}
+                <Widget
+                  responseMessages={this.state.messages}
                   handleNewUserMessage={this.sendMessage}
                   stylesInjected={widgetStyles}
-                  profileAvatar={logo}
+                  profileAvatar={null}
                   title="iStudy"
-                  subtitle="we're here to help"
-                /> */}
+                  subtitle="Let's chat"
+                />
             </div>
         );
     }
@@ -310,13 +354,15 @@ function mapStateToProps(state) {
     return {
         course: state.fetchDetailCourseDone,
         hasError: state.fetchCourseFailure,
+        user: state.auth.user,
         isLoading: state.fetchCourseLoading
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchDetailCourse: (course_no) => dispatch(fetchDetailCourse(course_no))
+        fetchDetailCourse: (course_no) => dispatch(fetchDetailCourse(course_no)),
+        userInfo: () => dispatch(userInfo())
     }
 };
 

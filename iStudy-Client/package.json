@@ -9,6 +9,7 @@
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "build": "npm run clean && npm run webpack",
     "start": "npm run clean && npm run webpack-dev-server",
+    "socket": "node src/server.js",
     "deploy": "NODE_ENV=production npm run clean && npm run webpack -p"
   },
   "author": "",
@@ -70,6 +71,8 @@
     "redux": "^3.7.1",
     "redux-form": "^7.0.0",
     "redux-thunk": "^2.2.0",
-    "seedrandom": "^2.4.3"
+    "seedrandom": "^2.4.3",
+    "socket.io": "^2.3.0",
+    "ws": "^7.2.3"
   }
 }

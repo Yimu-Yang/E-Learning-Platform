@@ -162,7 +162,7 @@ class CartBanner extends Component {
         const enrolled = JSON.parse(localStorage.getItem("enrolled"));
         const course_id = parseInt(localStorage.getItem("course"));
 
-        const isEnrolled = enrolled.includes(course_id);
+        const isEnrolled = enrolled && enrolled.includes(course_id);
         // console.log('enrolled: ', enrolled, course_id, isEnrolled);
         
         const enrollButton = (<RaisedButton label={isEnrolled ? 'UnEnroll' : 'Enroll'} size={40} primary={true} fullWidth={true} onTouchTap={() => this.addToCart(isEnrolled)} />);
