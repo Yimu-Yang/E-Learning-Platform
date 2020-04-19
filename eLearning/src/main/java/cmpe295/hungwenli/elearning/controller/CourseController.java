@@ -22,7 +22,7 @@ public class CourseController {
 
     @GetMapping(path = "/course/{id}", produces = "application/json")
     public HttpEntity<CourseDTO> findCourseById(@NotNull @PathVariable("id") String id) {
-        Integer idNum = Integer.valueOf(id);
+        Long idNum = Long.valueOf(id);
         CourseDTO course = courseService.findCourseById(idNum);
         return new ResponseEntity<>(course, HttpStatus.OK);
     }

@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * Define JPA and Hibernate Entity
  */
@@ -22,7 +24,7 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false, columnDefinition = "bigint")
-    private Integer id;
+    private Long id;
 
     @Column(name = "course_name", nullable = false, columnDefinition = "nvarchar(255)")
     private String courseName;
@@ -53,4 +55,5 @@ public class Course {
 
     @Column(name = "course_actual_url", columnDefinition = "nvarchar(255)")
     private String courseActualURL;
+
 }

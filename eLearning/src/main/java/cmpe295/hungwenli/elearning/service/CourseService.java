@@ -29,8 +29,8 @@ public class CourseService {
         result.put("limit", limit);
         result.put("skip", skip);
 
-        int minID = courseRepository.min();
-        int startID = minID + skip;
+        Long minID = courseRepository.min();
+        Long startID = minID + skip;
 
         List<CourseDTO> data = new ArrayList<>();
         for (int i = 0; i < limit; i++) {
@@ -54,7 +54,7 @@ public class CourseService {
         return result;
     }
 
-    public CourseDTO findCourseById(Integer id) {
+    public CourseDTO findCourseById(Long id) {
         Course course = courseRepository.findCourseById(id);
         CourseDTO courseDto = new CourseDTO(course.getId(),
                 course.getCourseName(),
