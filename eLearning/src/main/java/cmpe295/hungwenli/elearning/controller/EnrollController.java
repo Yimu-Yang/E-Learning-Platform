@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 
@@ -38,5 +39,18 @@ public class EnrollController {
         List<CourseDTO> res = enrollService.myCourse(userName);
 
         return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/unenroll", produces = "application/json")
+    public HttpStatus unenroll(@RequestParam Map<String, String> param) {
+        try {
+            String userName = String.valueOf(param.get("user_name"));
+            Long courseId = Long.valueOf(param.get("course_id"));
+
+            enrollService.unenroll(userName, courseId);
+            return HttpStatus.OK;
+        } catch (Exception e) {
+            return HttpStatus.BAD_REQUEST;
+        }
     }
 }
