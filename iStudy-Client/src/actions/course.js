@@ -72,7 +72,8 @@ export function fetchDetailCourseDone(course=null) {
 export function fetchDetailCourse(course_no=-1) {
     return (dispatch) => {
         dispatch(fetchCourseLoading(true));
-        fetch(`${hostUrl}/courses/detail/${course_no}`)
+        console.log('$$', course_no);
+        fetch(`${hostUrl}/course/${course_no}`)
             .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText);
@@ -128,18 +129,44 @@ export function paginateCourse(response) {
 export function paginate(keyword='',page=0,limit=0,sort,callback) {
     return function (dispatch) {
         dispatch(paginateLoading(true));
-
+        console.log('--> ', page, limit);
+        // const skip = page * limit;
+        const count = (page -1) * limit;
         const sort_type = sort.field;
         const sort_order = sort.value;
 
-        const url = `${hostUrl}/paginate`+"?" + $.param({
-                keyword, page, limit, sort_type, sort_order
+        let url;
+        if (keyword) {
+            url = `${hostUrl}/course/search` + "?" + $.param({
+                // , page, limit, sort_type, sort_order
+                keywords: keyword, '$limit': limit, '$skip': count
             });
-
+        } else {
+            url = `${hostUrl}/course` + "?" + $.param({
+                '$limit': limit, '$skip': count
+            });
+        }
+        console.log('send');
         axios.get(url)
             .then(response => {
                 if(callback) callback();
-                dispatch(paginateCourse(response));
+
+                // console.log('course response: ', response);
+                const {data} = response;
+                
+                let courses = response.data;
+                if (_.isArray(data)) {
+                    courses = {
+                        total: data.length,
+                        data,
+                        skip: 0,
+                        limit: data.length
+                    };
+                } 
+
+                console.log('courses: ', courses);
+
+                dispatch(paginateCourse(courses));
                 return dispatch(paginateLoading(false));
             })
             .catch(response => {

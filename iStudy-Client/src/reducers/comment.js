@@ -40,7 +40,7 @@ export function fetchCommentList(state = {
                 page: action.data.page,
                 limit: action.data.limit,
                 total: action.data.total,
-                comments: [...state.comments, ...action.data.comments]
+                comments: [...state.comments, ...action.data]
             };
         case RELOAD_COMMENT:
             return {

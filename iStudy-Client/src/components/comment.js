@@ -231,18 +231,19 @@ class Comment extends Component {
     };
 
     commentName = (comment) => {
-        if(comment._user) {
+        if (comment.user_name) {
             return (
-                <p className="text-size-fifth">{_.get(comment, '_user.profile.name')}</p>
+                <p className="text-size-forth">{comment.user_name}</p>
             );
         }
     };
 
     commentContent = (comment) => {
-        if(comment._user) {
+        // console.log('comment: ', comment);
+        if (comment.content) {
             return (
                 <div>
-                    <p className="text-size-fifth text-bold" dangerouslySetInnerHTML={ {__html: comment.content} }/>
+                    <p className="text-size-forth text-bold" dangerouslySetInnerHTML={{ __html: comment.content } }/>
                 </div>
             );
         }
@@ -325,7 +326,7 @@ _.get(comment, '_reply.content')} }/>
                 }}>
                     <div className="container-fluid">
                         <div className="row" style={{marginTop:20}}>
-                            <div className="col-sm-5">
+                            <div className="col-sm-3">
                                 <div style={{marginLeft: 3, marginRight: 3, marginTop: 8, marginBottom: 8, overflow: 'hidden'}}>
                                     <div className="row">
                                         <div className="col-xs-4">
@@ -338,7 +339,7 @@ _.get(comment, '_reply.content')} }/>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-sm-7">
+                            <div className="col-sm-9">
                                 <div style={{textAlign: 'center'}}>
                                     <Rating
                                         placeholderRate={comment.rating}
@@ -351,7 +352,7 @@ _.get(comment, '_reply.content')} }/>
                                 </div>
                                 <div style={{marginLeft:10, marginRight:10,marginTop:12, marginBottom:12}}>
                                     {this.commentContent(comment)}
-                                    {this.commentMark(comment)}
+                                    {/* {this.commentMark(comment)} */}
                                     <br/>
                                     {this.commentReply(comment)}
                                 </div>
@@ -418,7 +419,7 @@ _.get(comment, '_reply.content')} }/>
                 {this.renderDialog()}
                 {this.commentAdd()}
                 {this.renderList()}
-                {this.renderMore()}
+                {/* {this.renderMore()} */}
             </div>
         );
     }

@@ -25,6 +25,7 @@ import reducers from '../reducers';
 import ComposedAuth from '../middlewares/composed-auth';
 
 import {BrowserRouter as Router, Route} from 'react-router-dom';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 export const history = createBrowserHistory({
     forceRefresh: true
@@ -32,6 +33,7 @@ export const history = createBrowserHistory({
 
 export const store = createStore(
     reducers,
+    composeWithDevTools(),
     applyMiddleware(thunk)
 );
 
@@ -43,8 +45,8 @@ export const Routes = () => (
             <Route path="/signup" component={Signup}/>
             <Route path="/signin" component={Signin}/>
             <Route path="/signout" component={Signout}/>
-            <Route path="/detail" component={Detail}/>
-            <Route path={`/detail/:id`} component={DetailCourse}/>
+            <Route path={`/detail/:id`} component={DetailCourse} />
+            {/* <Route path="/detail" component={Detail}/> */}
             <Route path="/list-cart" component={ComposedAuth(ListCart)}/>
             <Route path="/lecture" component={Lecture}/>
             <Route path={`/view-lecture/:url`} component={ViewLecture}/>

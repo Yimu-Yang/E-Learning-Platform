@@ -16,6 +16,9 @@ import SignIn from '../auth/signin';
 import '../../styles/detail.css';
 
 const numberWithCommas = (x) => {
+    if (_.startsWith(x, 'FREE')) {
+        return x;
+    }
     let parts = parseInt(x).toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
@@ -85,18 +88,18 @@ class CartBanner extends Component {
         if (this.props.logged) {
             const {course} = this.props;
 
-            this.props.buyCourse(course.no);
+            this.props.buyCourse(course.id);
         }
         else {
             this.handleOpen();
         }
     };
 
-    addToCart = () => {
+    addToCart = (unenroll=false) => {
         if (this.props.logged) {
-            const {course} = this.props;
-
-            this.props.addCart(course.no);
+            const { course, user} = this.props;
+            console.log('cart user: ', user, course);
+            this.props.addCart(course.id, user.email, unenroll);
         }
         else {
             this.handleOpen();
@@ -130,7 +133,7 @@ class CartBanner extends Component {
         let filtered = null;
 
         if (course) {
-            if (user) {
+            if (user && user.courses) {
                 filtered = user.courses.filter(function (_course) {
                     if (_course.no === course.no) {
                         return _course;
@@ -155,15 +158,25 @@ class CartBanner extends Component {
             }
         }
 
+
+        const enrolled = JSON.parse(localStorage.getItem("enrolled"));
+        const course_id = parseInt(localStorage.getItem("course"));
+
+        const isEnrolled = enrolled && enrolled.includes(course_id);
+        // console.log('enrolled: ', enrolled, course_id, isEnrolled);
+        
+        const enrollButton = (<RaisedButton label={isEnrolled ? 'UnEnroll' : 'Enroll'} size={40} primary={true} fullWidth={true} onTouchTap={() => this.addToCart(isEnrolled)} />);
+
         return (
             <div>
                 <div style={{textAlign: 'center', marginBottom: 6}}>
-                    <RaisedButton label="Buy" secondary={true} fullWidth={true}
-                                  onTouchTap={() => this.buyCourse()}/>
+                    <RaisedButton label="Go to course" secondary={true} fullWidth={true}
+                        href={course.course_actual_url}
+                        target="_blank"
+                    />
                 </div>
                 <div style={{textAlign: 'center', marginBottom: 6}}>
-                    <RaisedButton label="Add to Cart" size={40} primary={true} fullWidth={true}
-                                  onTouchTap={() => this.addToCart()}/>
+                    {enrollButton}
                 </div>
             </div>
         );
@@ -200,13 +213,7 @@ class CartBanner extends Component {
                     <div style={{textAlign: 'center'}}>
                         {this.renderPicture(course)}
                     </div>
-                    <div style={{marginBottom:6}}/>
-                    <div style={{textAlign: 'center',marginTop: 6}}>
-                        <RaisedButton label="Preview the Course" labelStyle={{textTransform: 'none'}} fullWidth={true}/>
-                    </div>
-                    <div style={{textAlign: 'center', marginTop: 10, marginBottom: 10}}>
-                        <strong className="text-size-second text-black">${numberWithCommas(course.price)}</strong>
-                    </div>
+                    <div style={{marginTop:20}}/>
                     {this.renderButton(course)}
                     </div>
                 </Paper>
@@ -234,7 +241,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => {
     return {
         buyCourse: (course_no) => dispatch(buyCourse(course_no)),
-        addCart: (course_no) => dispatch(addCart(course_no)),
+        addCart: (course_no, user_name, unenroll) => dispatch(addCart(course_no, user_name, unenroll)),
         userInfo: () => dispatch(userInfo())
     }
 };

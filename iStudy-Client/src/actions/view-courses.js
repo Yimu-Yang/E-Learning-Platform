@@ -33,11 +33,15 @@ export function viewCoursesData(data) {
     }
 }
 
-export function fetchViewCourses() {
+export function fetchViewCourses(user_name) {
     return (dispatch) => {
         dispatch(viewCoursesLoading(true));
         const token = localStorage.getItem('token');
-        axios.get(`${hostUrl}/view-courses`, {
+        const url = `${hostUrl}/myEnrolls`+"?" + $.param({
+                user_name
+        });
+
+        axios.get(`${url}`, {
             headers: {
                 authorization: token
             }

@@ -13,6 +13,7 @@ class Detail extends Component {
     componentDidMount() {
         const course_no = localStorage.getItem('course');
         if(course_no) {
+            console.log('detail.js: course_no = ', course_no);
             this.props.fetchDetailCourse(course_no);
             this.props.fetchLecture(course_no);
 

@@ -17,7 +17,7 @@ import {hostUrl} from '../../config';
 
 import Header from './header';
 import Footer from './footer';
-
+import defaultImage from '../../public/assets/images/default-course.jpg';
 import '../../styles/detail.css';
 
 @centerComponent
@@ -61,16 +61,22 @@ class ViewCourses extends Component {
         const token = localStorage.getItem('token');
         if (token) {
             this.props.userInfo();
+
+            const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+            return sleep(1000).then(() => {
+                console.log('text: ', this.props)
+                this.props.fetchViewCourses(this.props.user.email);
+            });
         }
 
-        this.props.fetchViewCourses();
+        
     }
 
     handleCourse = (event, course) => {
         event.preventDefault();
 
-        localStorage.setItem('course', course.no);
-        this.props.history.push('/detail');
+        localStorage.setItem('course', course.id);
+        this.props.history.push(`/detail/${course.id}`);
     };
 
     renderState = () => {
@@ -94,7 +100,7 @@ class ViewCourses extends Component {
 
     renderTop = () => {
         const {courses} = this.props;
-
+        console.log('courses: ', courses)
         if(courses) {
             return (
                 <div style={{width: '100%', backgroundColor: 'rgba(33, 33, 33, 0.9)'}}>
@@ -143,15 +149,15 @@ class ViewCourses extends Component {
                 }}>
                     <div
                         style={{marginLeft: 3, marginRight: 3, marginTop: 12, marginBottom: 8, overflow: 'hidden'}}>
-                        <img style={{width: '100%', height: '100%'}} src={`${hostUrl}/images/${course.picture}`}/>
+                        <img style={{ width: '100%', height: '100%' }} src={_.startsWith(course.image_url, 'http') ? course.image_url : defaultImage} alt="" />
                     </div>
                     <hr/>
                     <div className="text-size-fifth">
-                        {this.authorNames(course._authors)}
+                        By: {course.provider}
                     </div>
                     <hr/>
-                    <div className="text-size-fifth text-bold">{course.title}</div>
-                    <div className="text-size-fifth">{course.subtitle}</div>
+                    <div className="text-size-fifth text-bold">{course.course_name}</div>
+                    {/* <div className="text-size-fifth">{course.subtitle}</div> */}
                 </Paper>
             </div>
         );
@@ -171,6 +177,8 @@ class ViewCourses extends Component {
         const {courses} = this.props;
 
         if(courses) {
+            localStorage.setItem('enrolled', JSON.stringify(_.map(courses, course => course.id)));
+
             if(courses.length <= 0) {
                 return (
                     <div className="text-size-second text-bold text-center" style={{marginTop: 140, marginBottom: 140}}>
@@ -178,7 +186,8 @@ class ViewCourses extends Component {
                     </div>
                 );
             }
-
+            
+            
             const rows =_.map(courses, (course, i) => {
                 if ((i % 3) === 0) {
                     const lists = _.slice(courses, i, i+3);
@@ -244,7 +253,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchViewCourses: () => dispatch(fetchViewCourses()),
+        fetchViewCourses: (user_name) => dispatch(fetchViewCourses(user_name)),
         userInfo: () => dispatch(userInfo())
     }
 };

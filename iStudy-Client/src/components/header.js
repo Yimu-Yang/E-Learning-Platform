@@ -53,7 +53,7 @@ class Header extends Component {
     };
 
     menuUser = () => {
-        let avatar_image = `${hostUrl}/images/anonymous.png`;
+        let avatar_image = `/public/assets/images/anonymous.png`;
         let name ='';
         let email = '';
 
@@ -158,7 +158,7 @@ class Header extends Component {
                     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
                     {this.menuCourses(false)}
-                    {this.menuCart(false)}
+                    {/* {this.menuCart(false)} */}
                     <MenuItem primaryText={this.renderText("Sign Up")} onTouchTap={() => {
                         this.props.history.push('/signup');
                     }}/>
@@ -199,7 +199,7 @@ class Header extends Component {
                     <MenuItem innerDivStyle={{margin:0,padding:0}} primaryText={this.menuUser()}/>
                     <div className="divider"/>
                     {this.menuCourses(true)}
-                    {this.menuCart(true)}
+                    {/* {this.menuCart(true)} */}
                     <div className="divider"/>
                     <MenuItem primaryText={this.renderText("Sign Up")} onTouchTap={() => {
                         this.props.history.push('/signup');

@@ -9,7 +9,10 @@ import {connect} from 'react-redux';
 import {fetchDetailCourse} from '../actions/course';
 import centerComponent from 'react-center-component';
 import CircularProgress from 'material-ui/CircularProgress';
-
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import defaultImage from '../../public/assets/images/default-course.jpg'
+import Widget from 'react-chat-widget';
+import { userInfo } from '../actions';
 import ShowMore from 'react-show-more';
 
 import Header from './header';
@@ -18,7 +21,34 @@ import CartBanner from './cart-banner';
 import Curriculum from './curriculum';
 import Comment from './comment';
 
+
 import '../../styles/detail.css';
+
+const widgetStyles = {
+    avatar: {display: 'none'},
+    header: {
+        backgroundColor: '#334588'
+    },
+    launcher: {
+        backgroundColor: '#334588'
+    },
+    message: {
+        backgroundColor: '#cdd8ec'
+    },
+    snippet: {
+        info: {
+            borderLeft: '2px solid #cdd8ec'
+        }
+    }
+}
+
+
+
+const handleNewUserMessage = (newMessage) => {
+  console.log(`New message incoming! ${newMessage}`);
+  // Now send the message throught the backend API
+};
+
 
 const numberWithCommas = (x) => {
     let parts = parseInt(x).toString().split(".");
@@ -32,9 +62,13 @@ class DetailCourse extends Component {
         super(props);
         this.state = {
             muiTheme: getMuiTheme(),
-            dialogStyle: {display: 'none'}
+            dialogStyle: {display: 'none'},
+            ws: new WebSocket('ws://localhost:3030'),
+            messages: []
         };
     }
+
+    
 
     static childContextTypes = {
         muiTheme: PropTypes.object
@@ -66,19 +100,59 @@ class DetailCourse extends Component {
 
         window.scrollTo(0, 0);
 
+        const token = localStorage.getItem('token');
+        if(token) {
+            console.log('---')
+            this.props.userInfo();
+        }
+
+        localStorage.setItem('course', this.props.match.params.id);
         this.props.fetchDetailCourse(this.props.match.params.id);
+
+        this.state.ws.onopen = () => {
+            // on connecting, do nothing but log it to the console
+            console.log('socket connected')
+        }
+
+        this.state.ws.onmessage = evt => {
+            // on receiving a message, add it to the list of messages
+            const message = JSON.parse(evt.data)
+            console.log('on receive msg: ', message);
+            this.addMessage(message)
+        }
+
+        this.state.ws.onclose = () => {
+            console.log('disconnected')
+            // automatically try to reconnect on connection loss
+            this.setState({
+                ws: new WebSocket(URL),
+            })
+        }
+    }
+
+    addMessage = message => this.setState(state => ({ messages: [
+        message, ...state.messages] }))
+
+    sendMessage = (newMessage) => {
+        console.log(`New message incomig! ${newMessage}`, this.props);
+        const massge = {
+            type: 'text',
+            text: `<${this.props.user.email}> : ${newMessage}`
+        }
+        // Now send the message throught the backend API
+        this.state.ws.send(JSON.stringify(massge))
     }
 
     renderState = () => {
-        if (this.props.hasError) {
-            return (
-                <div className="alert alert-danger">
-                    <div style={{textAlign: 'center'}}>
-                        <strong>There was a loading error</strong>
-                    </div>
-                </div>
-            );
-        }
+        // if (this.props.hasError) {
+        //     return (
+        //         <div className="alert alert-danger">
+        //             <div style={{textAlign: 'center'}}>
+        //                 <strong>There was a loading error</strong>
+        //             </div>
+        //         </div>
+        //     );
+        // }
 
         if (this.props.isLoading) {
             return (
@@ -159,19 +233,24 @@ class DetailCourse extends Component {
                             <div className="row body-content">
                                 <div className="col-sm-8">
                                     <br/>
+                                    <CardMedia
+                                        overlay={<CardTitle title="" subtitle={course.course_name} />}
+                                    >
+                                        <img src={_.startsWith(course.image_url, 'http') ? course.image_url : defaultImage} alt="" />
+                                    </CardMedia>
                                     <br/>
-                                    <div className="text-white text-size-first">{course.title}</div>
+                                    <div className="text-white text-size-first">{course.course_name}</div>
                                     <br/>
                                     <div className="text-white text-size-second">{course.subtitle}</div>
                                     <div className="text-white text-size-third">rating: <span
-                                        className="text-emphasis-first">{course.average}</span> (<span
-                                        className="text-emphasis-second">{numberWithCommas(course.reviews)}</span> reviews)
+                                        className="text-emphasis-first">{course.rating}</span> 
+                                        {/* (<span className="text-emphasis-second">{numberWithCommas(course.reviews)}</span> reviews) */}
                                     </div>
-                                    <div className="text-white text-size-third text"><span
+                                    {/* <div className="text-white text-size-third text"><span
                                         className="text-emphasis-third">{numberWithCommas(course.enrolled)}</span> students enrolled
-                                    </div>
+                                    </div> */}
                                     <div className="text-white text-size-third text">Created
-                                        by {this.authorNames(course._authors)}</div>
+                                        by {course.provider}</div>
                                     <div className="text-white text-size-third text">Last updated <span
                                         className="text-emphasis-third">{dateFormat(course.updated, "m/yyyy")}</span>
                                     </div>
@@ -196,6 +275,7 @@ class DetailCourse extends Component {
                 <div className="container">
                     <div className="row body-content">
                         <div className="col-sm-offset-1 col-sm-10">
+
                             <br/>
                             <br/>
                             <div className="text-size-second text-bold">Description</div>
@@ -206,15 +286,22 @@ class DetailCourse extends Component {
                                 less='Show less'
                                 anchorClass=''
                             >
-                                <div dangerouslySetInnerHTML={ {__html: unescape(course.description)} }/>
+                                <div dangerouslySetInnerHTML={{ __html: unescape(course.course_description)} }/>
                             </ShowMore>
                             <br/>
                             <br/>
-                            <Curriculum/>
+                            {/* <Curriculum/>
+                            <br />
+                            <ul>
+                                <li><a href={course.video_url}>Video URL</a></li>
+                                <li><a href={course.coursetalk_url}>Course Talk URL</a></li>
+                                <li><a href={course.course_redirect_url}>Course Redirect URL</a></li>
+                                <li><a href={course.course_actual_url}>Course Actual URL</a></li>
+                            </ul> */}
                         </div>
                     </div>
                 </div>
-                <div className="container">
+                {/* <div className="container">
                     <div className="row body-content">
                         <div className="col-sm-offset-1 col-sm-10">
                             <br/>
@@ -227,7 +314,7 @@ class DetailCourse extends Component {
                 <div className="container">
                     {this.renderAuthor(course._authors)}
                     <br/>
-                </div>
+                </div> */}
                 <br/>
                 <div className="container">
                     <Comment/>
@@ -250,6 +337,14 @@ class DetailCourse extends Component {
                     {this.renderCourse()}
                 </div>
                 <Footer {...this.props}/>
+                <Widget
+                  responseMessages={this.state.messages}
+                  handleNewUserMessage={this.sendMessage}
+                  stylesInjected={widgetStyles}
+                  profileAvatar={null}
+                  title="iStudy"
+                  subtitle="Let's chat"
+                />
             </div>
         );
     }
@@ -259,13 +354,15 @@ function mapStateToProps(state) {
     return {
         course: state.fetchDetailCourseDone,
         hasError: state.fetchCourseFailure,
+        user: state.auth.user,
         isLoading: state.fetchCourseLoading
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchDetailCourse: (course_no) => dispatch(fetchDetailCourse(course_no))
+        fetchDetailCourse: (course_no) => dispatch(fetchDetailCourse(course_no)),
+        userInfo: () => dispatch(userInfo())
     }
 };
 
