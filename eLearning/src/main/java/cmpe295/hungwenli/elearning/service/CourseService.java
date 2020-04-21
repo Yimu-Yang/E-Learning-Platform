@@ -74,11 +74,12 @@ public class CourseService {
 
         List<CourseDTO> res = new ArrayList<>();
 
-        List<String> courseList = tfidfService.search(10, keywords);
+        List<String> courseList = tfidfService.search(30, keywords);
 
         for (String name: courseList) {
-            Course course = courseRepository.findCourseByCourseName(name);
-            if (course == null) continue;
+            List<Course> courses = courseRepository.findCourseByCourseName(name);
+            if (courses.size() == 0) continue;
+            Course course = courses.get(0);
             CourseDTO courseDto = new CourseDTO(course.getId(),
                     course.getCourseName(),
                     course.getProvider(),
