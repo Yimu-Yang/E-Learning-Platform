@@ -73,12 +73,14 @@ export function paginate(state = {
                 courses: []
             };
         case PAGINATE_COURSE:
+            const courses = action.data;
+            console.log('action: ', action)
             return {
                 // page: action.data.page || 0,
-                page: (action.limit + action.skip) / 9,
-                limit: action.limit,
-                total: action.total,
-                courses: [...state.courses, ...action.data]
+                page: (courses.limit + courses.skip) / 9,
+                limit: courses.limit,
+                total: courses.total,
+                courses: [...state.courses, ...courses.data]
             };
         default:
             return state;

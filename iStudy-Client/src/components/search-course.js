@@ -221,11 +221,13 @@ class SearchCourse extends Component {
         );
     };
 
+
     handleDetail = (event, course) => {
         event.preventDefault();
 
         localStorage.setItem('course', course.id);
-        this.props.history.push(`/detail/${course.id}`);
+        const win = window.open(`/detail/${course.id}`, '_blank');
+        win.focus();
     };
 
     renderAuthor = (authors) => {

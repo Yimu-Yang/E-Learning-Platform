@@ -217,9 +217,9 @@ class Signin extends Component {
                         </div>
                     </form>
                 </div>
-                <div style={this.state.dialogStyle}>
+                {/* <div style={this.state.dialogStyle}>
                     {this.renderSocial()}
-                </div>
+                </div> */}
                 <div style={{marginBottom:40}}>&nbsp;</div>
                 {this.renderFooter()}
             </div>
