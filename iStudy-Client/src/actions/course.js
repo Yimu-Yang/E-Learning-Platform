@@ -146,7 +146,7 @@ export function paginate(keyword='',page=0,limit=0,sort,callback) {
                 '$limit': limit, '$skip': count
             });
         }
-        console.log('send');
+        console.log('send: ', url);
         axios.get(url)
             .then(response => {
                 if(callback) callback();
@@ -154,13 +154,15 @@ export function paginate(keyword='',page=0,limit=0,sort,callback) {
                 // console.log('course response: ', response);
                 const {data} = response;
                 
-                let courses = response.data;
+                let courses = response;
                 if (_.isArray(data)) {
                     courses = {
-                        total: data.length,
-                        data,
-                        skip: 0,
-                        limit: data.length
+                        data: {
+                            total: data.length,
+                            data,
+                            skip: 0,
+                            limit: data.length
+                        }
                     };
                 } 
 
