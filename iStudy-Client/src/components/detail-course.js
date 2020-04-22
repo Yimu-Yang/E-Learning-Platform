@@ -242,13 +242,13 @@ class DetailCourse extends Component {
                                     <div className="text-white text-size-first">{course.course_name}</div>
                                     <br/>
                                     <div className="text-white text-size-second">{course.subtitle}</div>
-                                    <div className="text-white text-size-third">rating: <span
+                                    <div className="text-white text-size-third">Rating: <span
                                         className="text-emphasis-first">{course.rating}</span> 
                                         {/* (<span className="text-emphasis-second">{numberWithCommas(course.reviews)}</span> reviews) */}
                                     </div>
-                                    {/* <div className="text-white text-size-third text"><span
-                                        className="text-emphasis-third">{numberWithCommas(course.enrolled)}</span> students enrolled
-                                    </div> */}
+                                    <div className="text-white text-size-third text">Price: <span
+                                        className="text-emphasis-third">{course.price}</span> 
+                                    </div>
                                     <div className="text-white text-size-third text">Created
                                         by {course.provider}</div>
                                     <div className="text-white text-size-third text">Last updated <span
@@ -342,7 +342,7 @@ class DetailCourse extends Component {
                   handleNewUserMessage={this.sendMessage}
                   stylesInjected={widgetStyles}
                   profileAvatar={null}
-                  title="iStudy"
+                    title="E-Learning Platform"
                   subtitle="Let's chat"
                 />
             </div>

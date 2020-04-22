@@ -23,7 +23,7 @@ class Footer extends Component {
         return (
             <div>
                 <RaisedButton
-                    label="Copyright ©"
+                    label=""
                     onTouchTap={() => {
                         this.props.history.push('/welcome');
                     }}
@@ -36,7 +36,7 @@ class Footer extends Component {
         return (
             <div>
                 <div>
-                    {this.handleLink()}
+                    {/* {this.handleLink()} */}
                 </div>
             </div>
         );

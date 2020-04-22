@@ -285,9 +285,9 @@ class Signup extends Component {
                             validate={this.validateName}
                             placeholder="Please enter your name"
                         />
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             {this.renderButton()}
-                        </div>
+                        </div> */}
                         <div style={{clear:'both'}}>&nbsp;</div>
                         <div style={{display:'flex', justifyContent:'center'}}>
                             <button
