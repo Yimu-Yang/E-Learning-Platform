@@ -55,7 +55,9 @@ module.exports = {
         contentBase: './',
         inline: true,
         historyApiFallback: true,
+        host: '0.0.0.0',
         port: 3000,
+        disableHostCheck: true,
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({name: 'vendor'}),
