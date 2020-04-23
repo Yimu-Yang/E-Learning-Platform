@@ -134,6 +134,9 @@ export function Logout() {
             .catch(response => {
                 return dispatch(signError(response.message));
             });
+
+        localStorage.removeItem('token');    
+        dispatch(signOut());
     }
 }
 
