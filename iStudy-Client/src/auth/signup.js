@@ -67,7 +67,8 @@ class Signup extends Component {
         const password = $('#password').val();
         const passwordConfirm = $('#passwordConfirm').val();
         const name = $('#name').val();
-        const fileToUpload = document.getElementById('fileToUpload').files;
+        const fileToUpload = undefined;
+        //const fileToUpload = document.getElementById('fileToUpload').files;
 
         if (email && password && passwordConfirm && name) {
             if (email.length > 0 && password.length > 0 && passwordConfirm.length > 0 && name.length > 0) {
@@ -118,6 +119,7 @@ class Signup extends Component {
     };
 
     uploadFile(event) {
+        return;
         const file = event.target.files[0];
         if(file) {
             const ext = path.extname(file.name).toLowerCase();
