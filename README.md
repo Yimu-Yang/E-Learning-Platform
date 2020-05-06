@@ -5,17 +5,17 @@ The amount of educational resources spread over the Internet is vast and diverse
 
 ## How to run
 1. 
-	cd tfidf
-	make install3
+	cd tfidf <br/>
+	make install3 <br/>
 	make run3
 
 2. 
-	cd eLearning
-	mvn package
+	cd eLearning <br/>
+	mvn package <br/>
 	mvn exec:java
 
 3. 
-	cd iStudy-Client
-	npm install
-	npm run socket
+	cd iStudy-Client <br/>
+	npm install <br/>
+	npm run socket <br/>
 	npm run start
